@@ -79,4 +79,3 @@ class Select:
     def Limit(self, end: int, offset: int = 0):
         self.Request += f" LIMIT {end} OFFSET {offset}" if end else ""
         return Select("", "", req=self.Request)
->>>>>>> dfd05c1 (Add files via upload)

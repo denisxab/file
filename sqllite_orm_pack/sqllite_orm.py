@@ -4,8 +4,8 @@ from os.path import exists, abspath
 from re import findall
 from sqlite3 import Binary
 from typing import List, Tuple, Dict, Union
-from file_pack.file import TxtFile
-from file_pack.sqllite_orm_pack.sqlmodules import *
+from file.file import TxtFile
+from sqllite_orm_pack.sqlmodules import *
 
 
 class SqlLiteQrm:
@@ -408,4 +408,3 @@ class SqlLiteQrm:
 
 if __name__ == '__main__':
     pass
->>>>>>> dfd05c1 (Add files via upload)

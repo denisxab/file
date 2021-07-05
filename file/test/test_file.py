@@ -2,7 +2,7 @@ import unittest
 from os.path import getsize
 from typing import List, Dict
 
-from file_pack.file import TxtFile, CsvFile, JsonFile, PickleFile
+from file.file import TxtFile, CsvFile, JsonFile, PickleFile
 
 
 class TestFile(unittest.TestCase):
