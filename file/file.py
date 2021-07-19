@@ -293,9 +293,14 @@ class JsonFile(File):
         with open(self.nameFile, "r") as read_file:
             return json.load(read_file)
 
-    def writeFile(self, data: Union[List, Dict], *, ensure_ascii: bool = False):  # +
+    def writeFile(self, data: Union[List, Dict], *, indent=4, ensure_ascii: bool = False):  # +
+        """
+        :param data: Даныне на запись
+        :param indent: Отступы пр записи
+        :param ensure_ascii: Экранировать символы, использовать False для записи кирилицы
+        """
         with open(self.nameFile, "w") as write_file:
-            json.dump(data, write_file, ensure_ascii=ensure_ascii)
+            json.dump(data, write_file, indent=1, ensure_ascii=ensure_ascii)
 
     def appendFile(self, data: Union[List, Dict], *, ensure_ascii: bool = False):  # +
         tmp_data = self.readFile()
