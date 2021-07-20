@@ -33,14 +33,13 @@ class File:
                 self.createRoute()
                 open(self.nameFile, "w+").close()
 
-    @staticmethod
-    def checkExistenceFile(nameFile: str) -> bool:  # +
+    def checkExistenceFile(self) -> bool:  # +
         # Проверить существование файла
-        return True if exists(nameFile) else False
+        return True if exists(self.nameFile) else False
 
     def deleteFile(self):  # +
         # Удаление файла
-        if File.checkExistenceFile(self.nameFile):
+        if self.checkExistenceFile():
             remove(self.route())
 
     def sizeFile(self) -> int:  # +

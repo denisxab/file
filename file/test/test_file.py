@@ -27,9 +27,9 @@ class TestFile(unittest.TestCase):
 
     def test_deleteFile_and_checkExistenceFile(self):
         # Проверка удаление файла
-        self.assertEqual(self.testClassFile.checkExistenceFile(self.nameFile), True)
+        self.assertEqual(self.testClassFile.checkExistenceFile(), True)
         self.testClassFile.deleteFile()
-        self.assertEqual(self.testClassFile.checkExistenceFile(self.nameFile), False)
+        self.assertEqual(self.testClassFile.checkExistenceFile(), False)
 
     def test_writeFile(self):
         # Првоекра записи в файл
@@ -114,9 +114,9 @@ class TestJson(unittest.TestCase):
 
     def test_deleteFile_and_checkExistenceFile(self):
         # Проверка удаление файла
-        self.assertEqual(self.testClassJson.checkExistenceFile(self.nameFile), True)
+        self.assertEqual(self.testClassJson.checkExistenceFile(), True)
         self.testClassJson.deleteFile()
-        self.assertEqual(self.testClassJson.checkExistenceFile(self.nameFile), False)
+        self.assertEqual(self.testClassJson.checkExistenceFile(), False)
 
     def test_writeJsonFile_and_readJsonFile(self):
         # Првоекра записи в файл разных структур данных
