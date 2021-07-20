@@ -231,6 +231,17 @@ class TxtFile(File):
 
         File.__init__(self, nameFile)
 
+    def readFileToResDict(self, *args: str, separator: str = '\n') -> Dict[str, str]:  # +
+        """
+        :param separator:
+        :param args: Имя ключей словаря
+        """
+        resDict: Dict[str, str] = {}
+        with open(self.nameFile, "r") as f:
+            for index, line in enumerate(f):
+                resDict[args[index]] = line.replace(separator, "")
+        return resDict
+
     def readFile(self, limit: int = 0) -> str:  # +
         with open(self.nameFile, "r") as f:
             if limit:

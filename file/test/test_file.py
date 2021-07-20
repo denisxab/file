@@ -62,7 +62,11 @@ class TestFile(unittest.TestCase):
         self.testClassFile.writeFile(test_text)
         self.assertEqual(self.testClassFile.readFile(2), "123123\n3123133\n")
 
-    # Этот метод запускаетсья ПОСЛЕ каждой функции теста
+    def test_readFileToResDict(self):
+        self.testClassFile.writeFile("23123123\n2sdasdasdasd\nasdasdasda!@#d")
+        res = self.testClassFile.readFileToResDict("name", "passwd", "token")
+        self.assertEqual(res, {'name': '23123123', 'passwd': '2sdasdasdasd', 'token': 'asdasdasda!@#d'})
+
     def test_searchFile(self):
         test_text = "Optional. If the number of \n bytes returned exceed the hint number, \n no more lines will be returned. Default value is  -1, which means all lines will be returned."
         self.testClassFile.writeFile(test_text)
