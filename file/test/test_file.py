@@ -76,6 +76,19 @@ class TestFile(unittest.TestCase):
         self.testClassFile.deleteFile()
 
 
+class test_File(unittest.TestCase):
+
+    def __init__(self, methodName: str = ...) -> None:
+        super().__init__(methodName)
+        self.nameFile = "test/test/data/test.txt"
+
+    def test_route(self):
+        self.testClassFile = TxtFile(self.nameFile)
+        self.testClassFile.writeFile("123")
+        self.assertEqual(self.testClassFile.readFile(), "123")
+        self.testClassFile.removeRoute()
+
+
 class TestJson(unittest.TestCase):
 
     def __init__(self, methodName: str = ...) -> None:
@@ -149,6 +162,7 @@ class TestCsvFile(unittest.TestCase):
 
     def setUp(self):
         self.cvs_file = CsvFile("test.csv")
+        self.cvs_file.deleteFile()
 
     def test_init_(self):
         # Реакция на некоректное им файла
@@ -279,6 +293,65 @@ class TestCsvFile(unittest.TestCase):
         self.cvs_file.writeFile([12, 123.43, 'Hello Привет', '1.5', 31.2, 22.3, 2.5]),
         self.assertEqual(self.cvs_file.readFile(),
                          [['12', '123.43', 'Hello Привет', '1.5', '31.2', '22.3', '2.5']])
+
+    def test_readFileAndFindDifferences(self):
+        data_file = [['Халява: на IndieGala бесплатно отдают аркадный футбол FootLOL: Epic Fail League',
+                      'https://playisgame.com/halyava/halyava-na-indiegala-besplatno-otdayut-arkadnyy-futbol-footlol-epic-fail-league/'],
+                     ['Халява: в Steam бесплатно отдают головоломку Landing и платформер Inops',
+                      'https://playisgame.com/halyava/halyava-v-steam-besplatno-otdayut-golovolomku-landing-i-platformer-inops/'],
+                     ['Халява: в For Honor можно играть бесплатно на выходных',
+                      'https://playisgame.com/halyava/halyava-v-for-honor-mozhno-igrat-besplatno-na-vyhodnyh/'],
+                     ['Халява: в сплатно раздают классические квесты Syberia I и Syberia II',
+                      'https://playisgame.com/halyava/halyava-v-gog-besplatno-razdayut-klassicheskie-kvesty-syberia-i-i-syberia-ii/'],
+                     ['Халява: о отдают музыкальный платформер Symphonia',
+                      'https://playisgame.com/halyava/halyava-v-gog-besplatno-otdayut-muzykalnyy-platformer-symphonia/'],
+                     ['Халява: на IndieGala бесплатно отдают Defense of Roman Britain в жанре защиты башень',
+                      'https://playisgame.com/halyava/halyava-na-indiegala-besplatno-otdayut-defense-of-roman-britain-v-zhanre-zaschity-bashen/'],
+                     ['Халява: в GOG можно бесплатно забрать подарки в честь WitcherCon',
+                      'https://playisgame.com/halyava/haljava-v-gog-mozhno-besplatno-zabrat-podarki-v-chest-witchercon/'],
+                     [
+                         'Халява: в EGS бесплатно отдают симулятор Bridge Constructor: The Walking Dead и стратегию Ironcast',
+                         'https://playisgame.com/halyava/haljava-v-egs-besplatno-otdajut-simuljator-bridge-constructor-the-walking-dead-i-strategiju-ironcast/'],
+                     ['Халява: в GOG стартовала бесплатная раздача коллекции Shadowrun Trilogy',
+                      'https://playisgame.com/halyava/khalyava-v-gog-startovala-besplatnaya-razdacha-kollektsii-shadowrun-trilogy/'],
+                     ['Халява: в Hell Let Loose можно играть бесплатно на выходных',
+                      'https://playisgame.com/halyava/khalyava-v-hell-let-loose-mozhno-igrat-besplatno-na-vykhodnykh/'],
+                     ['Халява: в EGS бесплатно раздают Horizon Chase Turbo и Sonic Mania',
+                      'https://playisgame.com/halyava/khalyava-v-egs-besplatno-razdayut-horizon-chase-turbo-i-sonic-mania/']]
+        new_data = [['Халява: на IndieGala бесплатно отдают аркадный футбол FootLOL: Epic Fail League',
+                     'https://playisgame.com/halyava/halyava-na-indiegala-besplatno-otdayut-arkadnyy-futbol-footlol-epic-fail-league/'],
+                    ['Халява: в Steam бесплатно отдают головоломку Landing и платформер Inops',
+                     'https://playisgame.com/halyava/halyava-v-steam-besplatno-otdayut-golovolomku-landing-i-platformer-inops/'],
+                    ['Халява: в For Honor можно играть бесплатно на выходных',
+                     'https://playisgame.com/halyava/halyava-v-for-honor-mozhno-igrat-besplatno-na-vyhodnyh/'],
+                    ['Халява: ОШИБКА классические квесты Syberia I и Syberia II',
+                     'https://playisgame.com/halyava/halyava-v-gog-besplatno-razdayut-klassicheskie-kvesty-syberia-i-i-syberia-ii/'],
+                    ['Халява: о отдают музыкальный платформер Symphonia',
+                     'https://playisgame.com/halyava/halyava-v-gog-besplatno-otdayut-muzykalnyy-platformer-symphonia/'],
+                    ['Халява: на IndieGala ERROR отдают Defense of Roman Britain в жанре защиты башень',
+                     'https://playisgame.com/halyava/halyava-na-indiegala-besplatno-otdayut-defense-of-roman-britain-v-zhanre-zaschity-bashen/'],
+                    ['Халява: в GOG можно бесплатно забрать подарки в честь WitcherCon',
+                     'https://playisgame.com/halyava/haljava-v-gog-mozhno-besplatno-zabrat-podarki-v-chest-witchercon/'],
+                    [
+                        'Халява: в EGS бесплатно отдают симулятор Bridge Constructor: The Walking Dead и стратегию Ironcast',
+                        'https://playisgame.com/halyava/haljava-v-egs-besplatno-otdajut-simuljator-bridge-constructor-the-ERROR-dead-i-strategiju-ironcast/'],
+                    ['Халява: в GOG стартовала бесплатная раздача коллекции Shadowrun Trilogy',
+                     'https://playisgame.com/halyava/khalyava-v-gog-startovala-besplatnaya-razdacha-kollektsii-shadowrun-trilogy/'],
+                    ['Халява: в Hell Let Loose можно играть бесплатно на выходных',
+                     'https://playisgame.com/halyava/khalyava-v-hell-let-loose-mozhno-igrat-besplatno-na-vykhodnykh/'],
+                    ['Халява: в EGS бесплатно раздают Horizon Chase Turbo и Sonic Mania',
+                     'https://playisgame.com/halyava/khalyava-v-egs-besplatno-razdayut-horizon-chase-turbo-i-sonic-mania/']]
+
+        tmpList = []
+        self.cvs_file.writeFile(data_file, header=("Имя акции", "Ссылка"))
+        self.cvs_file.readFileAndFindDifferences(new_data, tmpList.append)
+        self.assertEqual(tmpList, [['Халява: ОШИБКА классические квесты Syberia I и Syberia II',
+                                    'https://playisgame.com/halyava/halyava-v-gog-besplatno-razdayut-klassicheskie-kvesty-syberia-i-i-syberia-ii/'],
+                                   ['Халява: на IndieGala ERROR отдают Defense of Roman Britain в жанре защиты башень',
+                                    'https://playisgame.com/halyava/halyava-na-indiegala-besplatno-otdayut-defense-of-roman-britain-v-zhanre-zaschity-bashen/'],
+                                   [
+                                       'Халява: в EGS бесплатно отдают симулятор Bridge Constructor: The Walking Dead и стратегию Ironcast',
+                                       'https://playisgame.com/halyava/haljava-v-egs-besplatno-otdajut-simuljator-bridge-constructor-the-ERROR-dead-i-strategiju-ironcast/']])
 
     def __del__(self):
         self.cvs_file.deleteFile()

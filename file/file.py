@@ -1,6 +1,8 @@
 import csv
 import json
+import os
 import pickle
+import shutil
 from os import remove, SEEK_END, SEEK_SET
 from os.path import getsize, abspath, exists
 from typing import List, Dict, Union, Any
@@ -16,7 +18,7 @@ class File:
     - размер файла
     - проверка разрешения открытия файла
     """
-    __slots__ = ("nameFile")
+    __slots__ = "nameFile"
 
     def __init__(self, nameFile: str):
         self.nameFile: str = nameFile
@@ -25,7 +27,11 @@ class File:
     def createFileIfDoesntExist(self):  # +
         # Создать файл если его нет
         if not exists(self.nameFile):
-            open(self.nameFile, "w+").close()
+            try:
+                open(self.nameFile, "w+").close()
+            except FileNotFoundError:  # Создавать папки и деректории
+                self.createRoute()
+                open(self.nameFile, "w+").close()
 
     def checkExistenceFile(self) -> bool:  # +
         # Проверить существование файла
@@ -52,6 +58,16 @@ class File:
 
     def appendFile(self, arg: Any):
         raise NotImplementedError()
+
+    def createRoute(self):
+        tmp_route: str = ""
+        for folder_name in self.nameFile.split('/')[:-1]:
+            tmp_route += folder_name
+            os.mkdir(tmp_route)
+            tmp_route += '/'
+
+    def removeRoute(self):
+        shutil.rmtree(self.nameFile.split('/')[1])
 
 
 class PickleFile(File):
@@ -123,6 +139,22 @@ class CsvFile(File):
             if miss_get_head:  # Провустить заголовок
                 return res[1::]
             return res
+
+    def readFileAndFindDifferences(self, new_data_find: List[List], funIter) -> bool:  # +
+        """
+        for new_data, data_file in zip(self.ListStock, DataFile):
+            if new_data != data_file:
+                funIter(new_data)
+
+        :param new_data_find: Новые данные
+        :param funIter: Функция которая будет выполняться на каждой итерации
+        """
+        DataFile = self.readFile(miss_get_head=True)
+        if DataFile != new_data_find:
+            list(funIter(new_data) for new_data in new_data_find if new_data not in DataFile)
+            return True
+        else:
+            return False
 
     def readFileRevers(self, *,
                        limit: int = None,
@@ -231,7 +263,7 @@ class TxtFile(File):
 
         File.__init__(self, nameFile)
 
-    def readFileToResDict(self, *args: str, separator: str = '\n') -> Dict[str, str]:  # +
+    def readFileToResDict(self, *args: str, separator: str = '\n') -> Dict[str, str]:
         """
         :param separator:
         :param args: Имя ключей словаря
