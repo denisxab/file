@@ -100,14 +100,14 @@ class PickleFile(File):
                 tmp_data.update(data)
                 self.writeFile(tmp_data)
         else:
-            raise TypeError("Тип даннных в файле и тип входных данных раличны")
+            raise TypeError("Тип данных в файле и тип входных данных раличны")
 
 
 class CsvFile(File):
     def __init__(self, nameFile: str):
         tmp = nameFile.split(".")
         if any((len(tmp) != 2, tmp[1] != "csv")):
-            raise ValueError("Файл должен иметь разшерение .csv")
+            raise ValueError("Файл должен иметь расширение .csv")
 
         File.__init__(self, nameFile)
 
@@ -256,12 +256,24 @@ class TxtFile(File):
     - дозапись стандартную
     """
 
-    def __init__(self, nameFile: str):
+    def __init__(self, nameFile: str, *, mod: str = None, encoding: str = None, data: Any = None):
+
         tmp = nameFile.split(".")
         if any((len(tmp) != 2, tmp[1] != "txt")):
-            raise ValueError("Файл должен иметь разшерение .txt")
+            raise ValueError("Файл должен иметь расширение .txt")
 
         File.__init__(self, nameFile)
+
+        if mod:
+            self.res = {
+                "r": lambda: self.readFile(encoding=encoding),
+                "w": lambda: self.writeFile(data=data),
+                "rb": lambda: self.readBinaryFile(),
+                "wb": lambda: self.writeBinaryFile(data=data),
+                "a": lambda: self.appendFile(data=data),
+                "ab": lambda: self.appendBinaryFile(data=data)
+
+            }[mod]()
 
     def readFileToResDict(self, *args: str, separator: str = '\n') -> Dict[str, str]:
         """
@@ -274,8 +286,8 @@ class TxtFile(File):
                 resDict[args[index]] = line.replace(separator, "")
         return resDict
 
-    def readFile(self, limit: int = 0) -> str:  # +
-        with open(self.nameFile, "r") as f:
+    def readFile(self, limit: int = 0, *, encoding: str = None) -> str:  # +
+        with open(self.nameFile, "r", encoding=encoding) as f:
             if limit:
                 res: str = ""
                 for line in f:
@@ -343,7 +355,7 @@ class JsonFile(File):
         :param ensure_ascii: Экранировать символы, использовать False для записи кирилицы
         """
         with open(self.nameFile, "w") as write_file:
-            json.dump(data, write_file, indent=1, ensure_ascii=ensure_ascii)
+            json.dump(data, write_file, indent=indent, ensure_ascii=ensure_ascii)
 
     def appendFile(self, data: Union[List, Dict], *, ensure_ascii: bool = False):  # +
         tmp_data = self.readFile()
@@ -357,7 +369,7 @@ class JsonFile(File):
                 tmp_data.update(data)
                 self.writeFile(tmp_data, ensure_ascii=ensure_ascii)
         else:
-            raise TypeError("Тип даннных в файле и тип входных данных раличны")
+            raise TypeError("Тип данных в файле и тип входных данных раличны")
 
 
 if __name__ == '__main__':

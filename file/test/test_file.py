@@ -14,7 +14,7 @@ class TestFile(unittest.TestCase):
         # Данные для теста
         self.test_str: str = "ninja cjj,output На двух языках 1#1^23 !23№эЭ123'"
 
-    # Этот метод запускаетсья ПЕРЕД каждой функции теста
+    # Этот метод запускается ПЕРЕД каждой функции теста
     def setUp(self) -> None:
         self.testClassFile = TxtFile(self.nameFile)
         self.testClassFile.deleteFile()
@@ -45,12 +45,12 @@ class TestFile(unittest.TestCase):
         self.assertEqual(test_str, self.testClassFile.readFile())
 
     def test_readBinaryFile_and_writeBinaryFile(self):
-        # Проверкп записи и чтения в двоичном режиме
+        # Проверка записи и чтения в двоичном режиме
         self.testClassFile.writeBinaryFile(self.test_str.encode())
         self.assertEqual(self.test_str.encode(), self.testClassFile.readBinaryFile())
 
     def test_appendBinaryFile(self):
-        # Проверка дозаписи в двоичном режиме
+        # Проверка до записи в двоичном режиме
         tests: str = self.test_str
         self.testClassFile.writeBinaryFile(tests.encode())
         self.testClassFile.appendBinaryFile(tests.encode())
@@ -71,6 +71,14 @@ class TestFile(unittest.TestCase):
         test_text = "Optional. If the number of \n bytes returned exceed the hint number, \n no more lines will be returned. Default value is  -1, which means all lines will be returned."
         self.testClassFile.writeFile(test_text)
         self.assertEqual(self.testClassFile.searchFile("more"), True)
+
+    def test___init__QuackCommand(self):
+        w = TxtFile("test.txt", mod="w", data="123123")
+        r1 = TxtFile("test.txt", mod="r")
+        self.assertEqual(r1.res, "123123")
+        w = TxtFile("test.txt", mod="a", data="99")
+        r2 = TxtFile("test.txt", mod="r")
+        self.assertEqual(r2.res, "12312399")
 
     def __del__(self):
         self.testClassFile.deleteFile()
