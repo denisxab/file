@@ -300,11 +300,11 @@ class TxtFile(File):
             else:
                 return f.read()
 
-    def searchFile(self, data: str) -> bool:
+    def searchFile(self, name_find: str) -> bool:
         res = False
         with open(self.nameFile, "r") as f:
             for line in f:
-                if line.find(data) != -1:
+                if line.find(name_find) != -1:
                     res = True
                     break
         return res
@@ -357,7 +357,7 @@ class JsonFile(File):
         with open(self.nameFile, "w") as write_file:
             json.dump(data, write_file, indent=indent, ensure_ascii=ensure_ascii)
 
-    def appendFile(self, data: Union[List, Dict], *, ensure_ascii: bool = False):  # +
+    def appendFile(self, data: Union[List, Dict[str,Any]], *, ensure_ascii: bool = False):  # +
         tmp_data = self.readFile()
         if type(data) == type(tmp_data):
             # Tuple List

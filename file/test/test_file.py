@@ -63,9 +63,9 @@ class TestFile(unittest.TestCase):
         self.assertEqual(self.testClassFile.readFile(2), "123123\n3123133\n")
 
     def test_readFileToResDict(self):
-        self.testClassFile.writeFile("23123123\n2sdasdasdasd\nasdasdasda!@#d")
+        self.testClassFile.writeFile("my name\nmy passwd\nmy token")
         res = self.testClassFile.readFileToResDict("name", "passwd", "token")
-        self.assertEqual(res, {'name': '23123123', 'passwd': '2sdasdasdasd', 'token': 'asdasdasda!@#d'})
+        self.assertEqual(res, {'name': 'my name', 'passwd': 'my passwd', 'token': 'my token'})
 
     def test_searchFile(self):
         test_text = "Optional. If the number of \n bytes returned exceed the hint number, \n no more lines will be returned. Default value is  -1, which means all lines will be returned."
@@ -143,9 +143,8 @@ class TestJson(unittest.TestCase):
         self.assertEqual(temples, self.testClassJson.readFile())
 
     def test_appendJsonListFile(self):
-        # Првоекра дозаписи в файл разных структур данных
+        # Проверка до записи в файл разных структур данных
         # List
-
         self.testClassJson.deleteFile()
         self.testClassJson.createFileIfDoesntExist()
         tempers: List = self.testlist[0]
