@@ -189,8 +189,10 @@ assert tempers ==  json_obj.readFile()
 ```python
 pick_obj = PickleFile("test.pkl")
 ```
+
 ---
 -`writeFile( data: Any, *, protocol: int = 3)` = Записать данные в pkl
+
 ---
 -`readFile()` = Чтение данных phl
 > Пример
