@@ -1,11 +1,11 @@
 # Что это ?
 Это встраемовая библиотека для работы с 
 файлами формата 
-- txt = [TxtFile](##txtfile)
-- csv = [CsvFile](##csvFile)
-- json = [JsonFile](##jsonfile)
-- pick = [PickleFile](##picklefile)
-- SqlLite = [SqlLiteQrm](##sqlLiteqrm)
+- txt = [TxtFile](#txtfile)
+- csv = [CsvFile](#csvFile)
+- json = [JsonFile](#jsonfile)
+- pick = [PickleFile](#picklefile)
+- SqlLite = [SqlLiteQrm](#sqlLiteqrm)
 
 
 # Описание функционала библиотеки
