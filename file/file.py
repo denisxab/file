@@ -5,7 +5,7 @@ import pickle
 import shutil
 from os import remove, SEEK_END, SEEK_SET
 from os.path import getsize, abspath, exists
-from typing import List, Dict, Union, Any
+from typing import List, Dict, Union, Any, Set, Tuple
 
 
 class File:
@@ -87,8 +87,7 @@ class PickleFile(File):
         with open(self.nameFile, "rb") as pickFile:
             return pickle.load(pickFile)
 
-    def appendFile(self, data: Any, *, protocol: int = 3):
-
+    def appendFile(self, data: Union[Tuple, List, Dict, Set], *, protocol: int = 3):
         tmp_data = self.readFile()
         if type(data) == type(tmp_data):
             # Tuple List
@@ -136,7 +135,7 @@ class CsvFile(File):
             else:
                 res = list(csv.reader(f))
 
-            if miss_get_head:  # Провустить заголовок
+            if miss_get_head:  # Пропустить заголовок
                 return res[1::]
             return res
 
@@ -151,7 +150,8 @@ class CsvFile(File):
         """
         DataFile = self.readFile(miss_get_head=True)
         if DataFile != new_data_find:
-            list(funIter(new_data) for new_data in new_data_find if new_data not in DataFile)
+            for _ in (funIter(new_data) for new_data in new_data_find if new_data not in DataFile):
+                continue
             return True
         else:
             return False
@@ -207,7 +207,7 @@ class CsvFile(File):
                   ):  # +
         """
         :param data:
-        :param header: Эти даныне будут заголовками
+        :param header: Эти данные будут заголовками
         :param FlagDataConferToStr: Переводит все данные в формат str
         :param encoding: open()
         :param newline: open()
@@ -357,7 +357,7 @@ class JsonFile(File):
         with open(self.nameFile, "w") as write_file:
             json.dump(data, write_file, indent=indent, ensure_ascii=ensure_ascii)
 
-    def appendFile(self, data: Union[List, Dict[str,Any]], *, ensure_ascii: bool = False):  # +
+    def appendFile(self, data: Union[List, Dict[str, Any]], *, ensure_ascii: bool = False):  # +
         tmp_data = self.readFile()
         if type(data) == type(tmp_data):
             # Tuple List

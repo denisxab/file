@@ -19,20 +19,20 @@ def definition(TypeColumn):
     return res
 
 
-# Должны содержать ункальные значения
+# Должны содержать уникальные значения
 PrimaryKey = lambda TypeColumn: definition(TypeColumn) + " PRIMARY KEY"
-# Всегда должно быть заполенно
+# Всегда должно быть заполнено
 NotNull = lambda TypeColumn: definition(TypeColumn) + " NOT NULL"
 # Все столбцы будут по умолчанию заполнены указанными значениями
 NotNullDefault = lambda TypeColumn, default: definition(TypeColumn) + f" NOT NULL DEFAULT {default}"
 # Значение по умолчанию
 Default = lambda TypeColumn, default: definition(TypeColumn) + " DEFAULT {0}".format(default)
-# Авто заполение строки. подходит для id
+# Авто заполнение строки. подходит для id
 PrimaryKeyAutoincrement = lambda TypeColumn: definition(TypeColumn) + " PRIMARY KEY AUTOINCREMENT"
 toTypeSql = lambda TypeColumn: definition(TypeColumn)
 
 """
-Агрегирущие функции
+Агрегирующие функции
 """
 CountSql = lambda arg: "count(DISTINCT {0})".format(arg[1::]) if arg[0] == "-" else "count({0})".format(arg)
 SumSql = lambda arg: "sum(DISTINCT {0})".format(arg[1::]) if arg[0] == "-" else "sum({0})".format(arg)

@@ -1,3 +1,4 @@
 /venv
-
+/dist
+/file.egg-info
 /.idea

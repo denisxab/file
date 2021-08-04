@@ -6,7 +6,7 @@ from sqlite3 import Binary
 from typing import List, Tuple, Dict, Union
 
 from file.file import TxtFile
-from sqllite_orm_pack.sqlmodules import *
+from sqllite_orm.sqlmodules import *
 
 
 class SqlLiteQrm:
@@ -149,17 +149,21 @@ class SqlLiteQrm:
                 print(self.__print_table(NameTable, ", ".join(self.header_table[NameTable].keys()), res, FlagPrint))
             return res
 
-    def GetColumn(self, NameTable: str, name_columns: str) -> list:  # +
+    def GetColumn(self, NameTable: str, name_columns: str, LIMIT: Tuple[int, int] = None) -> list:  # +
         # Получить данные из столбца
+
+        request = 'SELECT {0} FROM {1}'.format(name_columns, NameTable)
+        if LIMIT:
+            request += " LIMIT {0} OFFSET {1}".format(LIMIT[0], LIMIT[1])
+
         with sqlite3.connect(self.__name_db) as connect:
             cursor = connect.cursor()
-            cursor.execute('SELECT {0} FROM {1}'.format(name_columns, NameTable))
+            cursor.execute(request)
             return [x[0] for x in cursor.fetchall()]
 
     # Удаление Данных
     def DeleteTable(self, NameTable: Union[str, List[str]]):  # +
-
-        # Удалить несоклько таблиц
+        # Удалить несколько таблиц
         if type(NameTable) == list:
             for item in NameTable:
                 if self.header_table.get(item):
@@ -177,7 +181,7 @@ class SqlLiteQrm:
                         sqlWHERE: str = ""):
         """
         :param NameTable: Название таблицы
-        :param sqlWHERE: Условие SQL полсе WHERE
+        :param sqlWHERE: Условие SQL после WHERE
         """
         request: str = "DELETE FROM {0}".format(NameTable)
 
@@ -188,27 +192,27 @@ class SqlLiteQrm:
             connect.cursor().execute(request)
 
     # Работа с данными таблиц
-    def CreateTable(self, NameTable: str, data: Union[str, Dict]):  # +
+    def CreateTable(self, NameTable: str, columns: Union[str, Dict]):  # +
         # Конвертация типов в str
         request: str = f"CREATE TABLE IF NOT EXISTS {NameTable} "
-        if type(data) == str:
-            request += data
+        if type(columns) == str:
+            request += columns
 
             dict_tmp: dict = {}
-            for items in (x.strip() for x in data.replace("(", "").replace(")", "").split(",")):
+            for items in (x.strip() for x in columns.replace("(", "").replace(")", "").split(",")):
                 arr = items.split(' ')
                 dict_tmp[arr[0]] = " ".join(arr[1::])
 
             self.header_table[NameTable] = dict_tmp
 
-        elif type(data) == dict:
+        elif type(columns) == dict:
             # Если все данные сделаны как положено
-            if list(filter(lambda x: True if type(x) == str else False, data.values())):
+            if list(filter(lambda x: True if type(x) == str else False, columns.values())):
                 request += "( "
-                for k, v in data.items():
+                for k, v in columns.items():
                     request += f"{k} {v}, "
                 request = request[:-2:] + " )"
-                self.header_table[NameTable] = data
+                self.header_table[NameTable] = columns
             else:
                 raise TypeError("Переданные данные не типа str")
 
@@ -228,22 +232,22 @@ class SqlLiteQrm:
         :param NameTable:
         :param data:
         :param sqlRequest:
-        :param CheckBLOB: проверка стурктуры на анличие бинарных бинырных данных и перевод их  в sqlite3.Binary()
+        :param CheckBLOB: проверка структуры на наличие бинарных бинарных данных и перевод их  в sqlite3.Binary()
         :return:
         """
 
-        # Создать тест на проверку одной запи
+        # Создать тест на проверку одной записи
         request: str = "INSERT INTO {0}".format(NameTable)
 
-        if sqlRequest:  # для вложенных запрсов
+        if sqlRequest:  # для вложенных запасов
             request += " {0}".format(sqlRequest)
-            data = None  # Сделать тест провреки вставки данных
+            data = None  # Сделать тест проверки вставки данных
 
         else:
             if type(data) in (int, float, str):  # Для SQL команд
                 if type(data) == str and data.find("bytes") != -1:
                     raise TypeError(
-                        "Нельзя отпраять BLOB в формате строки. Воспользуйтесь добавление данных через list")
+                        "Нельзя отпаять BLOB в формате строки. Воспользуйтесь добавление данных через list")
                 request += " ('{0}') VALUES ({1})".format("', '".join(self.header_table[NameTable].keys()), data)
                 data = None
 
@@ -252,7 +256,7 @@ class SqlLiteQrm:
                 # Конвертация типа в dict в SQL запрос
                 if type(data) == dict:
                     if tuple(data.keys() - self.header_table[NameTable].keys()):
-                        raise IndexError("Именя переданного столбца неуществует")
+                        raise IndexError("Имён переданного столбца не существует")
 
                     request += " ('{0}') VALUES ({1})".format("', '".join(data.keys()), res)
 
@@ -268,7 +272,7 @@ class SqlLiteQrm:
                 # Конвертация типов list, tuple в SQL запрос
                 elif type(data) == tuple or type(data) == list:
                     if len(data) != len(self.header_table[NameTable]):
-                        raise IndexError("Разное колличество столбцов таблицы и входных данных")
+                        raise IndexError("Разное количество столбцов таблицы и входных данных")
 
                     request += " ('{0}') VALUES ({1})".format("', '".join(self.header_table[NameTable].keys()), res)
 
@@ -320,19 +324,19 @@ class SqlLiteQrm:
     def UpdateColumne(self, NameTable: str,
                       name_column: Union[str, List[str]],
                       new_data: Union[str, bytes, int, float, List[Union[str, bytes, int, float]]],
-                      sqlWHERE: str = "",
+                      sqlWHERE: str = ""
                       ):
         """
-        Обновлени данных в стобцах
+        Обновление данных в столбцах
         :param NameTable: Название таблицы
-        :param name_column: Название столбца котроый будет выбора
+        :param name_column: Название столбца который будет выбора
         :param new_data: Новое значение у столбцов
-        :param sqlWHERE: Условие SQL полсе WHERE
+        :param sqlWHERE: Условие SQL поле WHERE
         """
 
         request: str = "UPDATE {0} SET ".format(NameTable)
 
-        if type(name_column) == list and type(new_data) == list:  # Нескольк столбцов на измнение
+        if type(name_column) == list and type(new_data) == list:  # Несколько столбцов на изменение
             if len(name_column) != len(new_data):
                 raise IndexError("name_column != new_data")
 
@@ -342,7 +346,7 @@ class SqlLiteQrm:
                 else:
                     request += "{0} = {1}, ".format(n, d)
             request = request[:-2:]
-        else:  # один столбцов на измнение
+        else:  # один столбец на измнение
             request += "{0} = {1}".format(name_column, new_data)
 
         if sqlWHERE:
@@ -376,7 +380,7 @@ class SqlLiteQrm:
 
         return res
 
-    # Опреации над БД
+    # Операции над БД
     def SaveDbToFile(self, name_save_db):
         tm = TxtFile(name_save_db)
         tm.deleteFile()

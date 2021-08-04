@@ -182,11 +182,11 @@ class TestCsvFile(unittest.TestCase):
             [[1, 23, 41, 5],
              [21, 233, 46, 35],
              [13, 233, 26, 45],
-             [12, 213, 43, 56]], FlagDataConferToStr=True, header=("Даннык", "Data", "Числа", "Num"))
+             [12, 213, 43, 56]], FlagDataConferToStr=True, header=("Данныe", "Data", "Числа", "Num"))
 
         #  Тест на чтение Cvs файла
         self.assertEqual(self.cvs_file.readFile(),
-                         [['Даннык', 'Data', 'Числа', 'Num'], ['1', '23', '41', '5'], ['21', '233', '46', '35'],
+                         [['Данныe', 'Data', 'Числа', 'Num'], ['1', '23', '41', '5'], ['21', '233', '46', '35'],
                           ['13', '233', '26', '45'], ['12', '213', '43', '56']])
 
         #  Тест на чтение cvs файла с убранами заголовками
@@ -196,17 +196,17 @@ class TestCsvFile(unittest.TestCase):
 
         # Тест на личит чтнеия
         self.assertEqual(self.cvs_file.readFile(limit=2),
-                         [['Даннык', 'Data', 'Числа', 'Num'], ['1', '23', '41', '5']])
+                         [['Данныe', 'Data', 'Числа', 'Num'], ['1', '23', '41', '5']])
 
         #  Тест на привышающий лимит чтения
         self.assertEqual(self.cvs_file.readFile(limit=1123),
-                         [['Даннык', 'Data', 'Числа', 'Num'], ['1', '23', '41', '5'], ['21', '233', '46', '35'],
+                         [['Данныe', 'Data', 'Числа', 'Num'], ['1', '23', '41', '5'], ['21', '233', '46', '35'],
                           ['13', '233', '26', '45'], ['12', '213', '43', '56']])
 
         #  Тест на чтение в обратном порядке
         self.assertEqual(self.cvs_file.readFileRevers(),
                          [['12', '213', '43', '56'], ['13', '233', '26', '45'], ['21', '233', '46', '35'],
-                          ['1', '23', '41', '5'], ['Даннык', 'Data', 'Числа', 'Num']])
+                          ['1', '23', '41', '5'], ['Данныe', 'Data', 'Числа', 'Num']])
 
         # Тест на лимит чтени в обратном порядке
         self.assertEqual(self.cvs_file.readFileRevers(limit=2), [['12', '213', '43', '56'], ['13', '233', '26', '45']])
@@ -214,25 +214,25 @@ class TestCsvFile(unittest.TestCase):
         #  Тест на привышающий лимит чтения в обратном порядке
         self.assertEqual(self.cvs_file.readFileRevers(limit=111),
                          [['12', '213', '43', '56'], ['13', '233', '26', '45'], ['21', '233', '46', '35'],
-                          ['1', '23', '41', '5'], ['Даннык', 'Data', 'Числа', 'Num']])
+                          ['1', '23', '41', '5'], ['Данныe', 'Data', 'Числа', 'Num']])
 
         self.cvs_file.deleteFile()
 
     def test_appendFile(self):
-        # проверка дозаписи в файл
+        # проверка до записи в файл
         self.cvs_file.deleteFile()
 
-        # Провекра записи с флагом FlagDataConferToStr
+        # Проверка записи с флагом FlagDataConferToStr
         self.cvs_file.writeFile(
             [[1, 23, 41, 5],
              [21, 233, 46, 35],
              [13, 233, 26, 45],
-             [12, 213, 43, 56]], FlagDataConferToStr=True, header=("Даннык", "Data", "Числа", "Num"))
+             [12, 213, 43, 56]], FlagDataConferToStr=True, header=("Данные", "Data", "Числа", "Num"))
 
         self.cvs_file.appendFile([['2323', '23233', '23']])
 
         self.assertEqual(self.cvs_file.readFile(),
-                         [['Даннык', 'Data', 'Числа', 'Num'], ['1', '23', '41', '5'], ['21', '233', '46', '35'],
+                         [['Данные', 'Data', 'Числа', 'Num'], ['1', '23', '41', '5'], ['21', '233', '46', '35'],
                           ['13', '233', '26', '45'], ['12', '213', '43', '56'], ['2323', '23233', '23']])
 
     def test_ordinary(self):

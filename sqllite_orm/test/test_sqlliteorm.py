@@ -2,7 +2,7 @@ import unittest
 from os import path, listdir
 from os.path import getsize
 
-from sqllite_orm_pack import *
+from sqllite_orm import *
 
 
 class TestSqlLite(unittest.TestCase):
@@ -198,7 +198,7 @@ class TestSqlLite(unittest.TestCase):
                           ('2006-01-05', 'BUY', 35.14, 100010001))  # Маленькая длины tuple,list
 
     def test_ExecuteTable_sqlRequest(self):
-        # Проверка добовления данных ExecuteTable через ReturnSqlRequest
+        # Проверка добавления данных ExecuteTable через ReturnSqlRequest
         self.sq.CreateTable(self.name_table,
                             {"id": toTypeSql(int),
                              "old": toTypeSql(int)
@@ -229,7 +229,7 @@ class TestSqlLite(unittest.TestCase):
         self.assertEqual(path.exists(self.name_db), False)
 
     def test_total(self):
-        # Проверка записи в БД списка деректории
+        # Проверка записи в БД списка директории
         self.sq.CreateTable(self.name_table, {"name_file": toTypeSql(str), "size_file": toTypeSql(int)})
         for nf in listdir("D:"):
             if len(nf.split(".")) == 2 and nf.split(".")[1] == "py":
@@ -406,7 +406,7 @@ class TestSqlLite(unittest.TestCase):
             'SELECT * FROM stocks WHERE old > 20 ORDER BY id ASC LIMIT 4 OFFSET 2')
 
     def test_ExecuteManyTable_and_sqlJOIN(self):
-        # Проверка когда созданы ДВЕ таблицы и мы проверяем то что заголвки подобрны правильно для заполения
+        # Проверка когда созданы ДВЕ таблицы и мы проверяем то что заголовки указаны правильно для заполнения
 
         self.sq.CreateTable(self.name_table, {"id": toTypeSql(int), "name": toTypeSql(str), "old": toTypeSql(int)})
         self.sq.ExecuteManyTable(self.name_table, [
@@ -414,7 +414,7 @@ class TestSqlLite(unittest.TestCase):
             [1, "Musha", 25],
             [2, "Dima", 33]
         ])
-        # Проверка когда созданы ДВЕ таблицы и мы проверяем то что заголвки подобрны правильно для заполения
+        # Проверка когда созданы ДВЕ таблицы и мы проверяем то что заголовки указаны правильно для заполнения
 
         self.sq.DeleteTable("new")
         self.sq.CreateTable("new", {"id": toTypeSql(int), "many": toTypeSql(int), "score": toTypeSql(int),
@@ -523,6 +523,7 @@ class TestSqlLite(unittest.TestCase):
 
         self.assertEqual(self.sq.GetColumn(self.name_table, "name"), ['Denis', 'Katy', 'Svetha'])
         self.assertEqual(self.sq.GetColumn(self.name_table, "old"), [21, 21, 24])
+        self.assertEqual(self.sq.GetColumn(self.name_table, "old", LIMIT=(2, 0)), [21, 21])
 
     def tests_UpdateColumne(self):
         # Проверка обновления данных
@@ -603,7 +604,7 @@ class TestSqlLite(unittest.TestCase):
         self.assertEqual(self.sq.GetTable(self.name_table), [(1, 'Denis', 21, '_'), (5, 'Pvetha', 24, '_')])
 
     def test_AggregatingSearchColumne(self):
-        # Тестирование агрегирующийх функций и групировок
+        # Тестирование агрегирующие функций и группировок
         self.sq.CreateTable(self.name_table,
                             {"id": PrimaryKeyAutoincrement(int), "name": toTypeSql(str), "old": toTypeSql(int),
                              "sex": NotNullDefault(str, "_")})
@@ -639,10 +640,10 @@ class TestSqlLite(unittest.TestCase):
         # Проверять на глаз
         self.sq.CreateTable(self.name_table, {"id": toTypeSql(int), "name": toTypeSql(str), "old": toTypeSql(int)})
         self.sq.HeadTable(self.name_table, 1)
-        # print(self.sq.HeadTable(self.name_table, 15)
+        print(self.sq.HeadTable(self.name_table, 15))
 
     def test_Execute_ALL(self):
-        # Проверка того чтоя не изменил строчку которая коректно подстовляет именна SQL запросы
+        # Проверка того что я не изменил строчку которая корректно подставляет имена SQL запросы
         # request += " ('{0}') VALUES ({1})".format("', '".join(self.header_table[name_table].keys()), res)
 
         self.sq.CreateTable(self.name_table, {'id_user': toTypeSql(int)})
@@ -656,7 +657,7 @@ class TestSqlLite(unittest.TestCase):
                           (526765559,)])
 
     def test_SaveDbToFile_ReadFileToDb(self):
-        # # ExecuteManyTable запись BLOB и проврека CheckBLOB
+        # # ExecuteManyTable запись BLOB и проверка CheckBLOB
         self.sq.CreateTable(self.name_table, {
             'car_id': PrimaryKeyAutoincrement(int),
             "model": toTypeSql(str),
