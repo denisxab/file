@@ -1,3 +1,5 @@
+__all__ = ["File", "PickleFile", "CsvFile", "TxtFile", "JsonFile"]
+
 import csv
 import json
 import os
@@ -71,7 +73,6 @@ class File:
 
 
 class PickleFile(File):
-    # https://docs.python.org/3/library/pickle.html
     def __init__(self, nameFile: str):
         tmp = nameFile.split(".")
         if any((len(tmp) != 2, tmp[1] != "pkl")):

@@ -2,7 +2,6 @@
 Модификаторы данных
 """
 
-
 def definition(TypeColumn):
     if TypeColumn == str:
         res = "TEXT"

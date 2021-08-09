@@ -1,8 +1,9 @@
+import sqlite3
 import unittest
+from file.file_pack import *
 from os import path, listdir
-from os.path import getsize
 
-from sqllite_orm import *
+from sqllite_orm_pack import *
 
 
 class TestSqlLite(unittest.TestCase):
@@ -231,11 +232,10 @@ class TestSqlLite(unittest.TestCase):
     def test_total(self):
         # Проверка записи в БД списка директории
         self.sq.CreateTable(self.name_table, {"name_file": toTypeSql(str), "size_file": toTypeSql(int)})
-        for nf in listdir("D:"):
-            if len(nf.split(".")) == 2 and nf.split(".")[1] == "py":
-                self.sq.ExecuteTable(self.name_table, (nf, getsize(nf)))
-        self.assertEqual(self.sq.GetTable(self.name_table), [(nf, getsize(nf)) for nf in listdir("D:") if
-                                                             len(nf.split(".")) == 2 and nf.split(".")[1] == "py"])
+        for i, nf in enumerate(listdir("D:")):
+            self.sq.ExecuteTable(self.name_table, (nf, i))
+
+        self.assertEqual(self.sq.GetTable(self.name_table), [(nf, i) for i, nf in enumerate(listdir("D:"))])
 
     def test_Search(self):
         # Проврека функции поиска Search obj_Select SqlDataClass

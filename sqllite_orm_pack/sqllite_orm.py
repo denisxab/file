@@ -1,12 +1,14 @@
+__all__ = ["SqlLiteQrm"]
+
 import sqlite3
+from file.file_pack import TxtFile
 from os import remove
 from os.path import exists, abspath
 from re import findall
 from sqlite3 import Binary
 from typing import List, Tuple, Dict, Union
 
-from file.file import TxtFile
-from sqllite_orm.sqlmodules import *
+from .sqlmodules import *
 
 
 class SqlLiteQrm:
@@ -14,9 +16,9 @@ class SqlLiteQrm:
 
     def __init__(self, name_dbf: str) -> None:  # +
 
-        tmp = name_dbf.split(".")  # Проверка того что разшерение db
+        tmp = name_dbf.split(".")  # Проверка того что расширение db
         if len(tmp) != 2 or tmp[1] != "db":
-            raise NameError("Файл должен иметь разшерение .db")
+            raise NameError("Файл должен иметь расширение .db")
 
         self.__name_db = name_dbf
         self.__header_table: Dict[
