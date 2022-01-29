@@ -2,7 +2,7 @@ import unittest
 from os import path, listdir
 from os.path import getsize
 
-from sqllite_orm import *
+from mg_file.sqllite_orm import *
 
 
 class TestSqlLite(unittest.TestCase):

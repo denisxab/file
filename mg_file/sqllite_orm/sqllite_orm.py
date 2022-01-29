@@ -5,8 +5,8 @@ from re import findall
 from sqlite3 import Binary
 from typing import List, Tuple, Dict, Union
 
-from file.file import TxtFile
-from sqllite_orm.sqlmodules import *
+from mg_file.file.file import TxtFile
+from mg_file.sqllite_orm.sqlmodules import *
 
 
 class SqlLiteQrm:
