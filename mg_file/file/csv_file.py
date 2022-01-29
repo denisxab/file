@@ -6,7 +6,7 @@ from typing import Union, List
 # pip install prettytable
 from prettytable import PrettyTable
 
-from mg_file.file import BaseFile, ConcatData
+from .base_file import BaseFile
 
 
 class CsvFile(BaseFile):

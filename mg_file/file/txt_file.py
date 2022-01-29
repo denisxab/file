@@ -1,6 +1,6 @@
 from typing import Dict, Union, Any
 
-from mg_file.file import BaseFile
+from .base_file import BaseFile
 
 
 class TxtFile(BaseFile):

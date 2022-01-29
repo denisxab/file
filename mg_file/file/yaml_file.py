@@ -4,7 +4,7 @@ from typing import Any, Union, Iterator
 from yaml import load, Loader, dump, load_all
 from yaml.composer import ComposerError
 
-from mg_file.file import BaseFile
+from .base_file import BaseFile
 
 
 class YamlFile(BaseFile):

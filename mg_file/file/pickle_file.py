@@ -2,7 +2,7 @@ from os.path import splitext
 from pickle import load, dump
 from typing import Any, Union
 
-from mg_file.file import BaseFile
+from .base_file import BaseFile
 
 
 class PickleFile(BaseFile):

@@ -2,7 +2,7 @@ from json import load, dump
 from os.path import splitext
 from typing import Any, Union
 
-from mg_file.file import BaseFile, ConcatData
+from .base_file import BaseFile
 
 
 class JsonFile(BaseFile):

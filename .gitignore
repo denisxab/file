@@ -1,3 +1,8 @@
 /venv
 /.idea
 /dist
+__pycache__
+mg_file/__pycache__/
+mg_file/file/__pycache__/
+mg_file/sqllite_orm/__pycache__/
+
