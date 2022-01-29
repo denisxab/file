@@ -2,7 +2,10 @@ import unittest
 from os.path import getsize
 from typing import List, Dict
 
-from mg_file.file.file import TxtFile, CsvFile, JsonFile, PickleFile
+from mg_file.file.csv_file import CsvFile
+from mg_file.file.json_file import JsonFile
+from mg_file.file.pickle_file import PickleFile
+from mg_file.file.txt_file import TxtFile
 
 
 class TestFile(unittest.TestCase):
@@ -10,20 +13,20 @@ class TestFile(unittest.TestCase):
     def __init__(self, methodName: str = ...) -> None:
         super().__init__(methodName)
         # Имя фалйа
-        self.nameFile = "test.txt"
+        self.name_file = "test.txt"
         # Данные для теста
         self.test_str: str = "ninja cjj,output На двух языках 1#1^23 !23№эЭ123'"
 
     # Этот метод запускается ПЕРЕД каждой функции теста
     def setUp(self) -> None:
-        self.testClassFile = TxtFile(self.nameFile)
+        self.testClassFile = TxtFile(self.name_file)
         self.testClassFile.deleteFile()
         self.testClassFile.createFileIfDoesntExist()
 
     def test_sizeFile(self):
-        # Првоекра определение размера файла
+        # Проверка определение размера файла
         self.testClassFile.writeFile(self.test_str)
-        self.assertEqual(self.testClassFile.sizeFile(), getsize(self.testClassFile.nameFile))
+        self.assertEqual(self.testClassFile.sizeFile(), getsize(self.testClassFile.name_file))
 
     def test_deleteFile_and_checkExistenceFile(self):
         # Проверка удаление файла
@@ -32,7 +35,7 @@ class TestFile(unittest.TestCase):
         self.assertEqual(self.testClassFile.checkExistenceFile(), False)
 
     def test_writeFile(self):
-        # Првоекра записи в файл
+        # Проверка записи в файл
         self.testClassFile.writeFile(self.test_str)
         self.assertEqual(self.test_str, self.testClassFile.readFile())
 
@@ -88,10 +91,10 @@ class test_File(unittest.TestCase):
 
     def __init__(self, methodName: str = ...) -> None:
         super().__init__(methodName)
-        self.nameFile = "test/test/data/test.txt"
+        self.name_file = "test/test/data/test.txt"
 
     def test_route(self):
-        self.testClassFile = TxtFile(self.nameFile)
+        self.testClassFile = TxtFile(self.name_file)
         self.testClassFile.writeFile("123")
         self.assertEqual(self.testClassFile.readFile(), "123")
         self.testClassFile.removeRoute()
@@ -107,18 +110,18 @@ class TestJson(unittest.TestCase):
             {12: 2, 1: 1, 1.2: 1.3, 13: 1.2, 4.2: 1, -12: 1, 41: -23, -23.1: -2.2, -232.2: 1,
              "Qwe": 1, 15: "Qwe", -21: "Qwe", 12.3: "DewW", -11: "wasd", "quests": -123},
         ]
-        self.nameFile = "test.json"
+        self.name_file = "test.json"
 
     # Этот метод запускаетсья ПЕРЕД каждой функции теста
     def setUp(self) -> None:
-        self.testClassJson = JsonFile(self.nameFile)
+        self.testClassJson = JsonFile(self.name_file)
         self.testClassJson.deleteFile()
         self.testClassJson.createFileIfDoesntExist()
 
     def test_sizeFile(self):
-        # Првоекра определение размера файла
-        self.testClassJson.writeFile(self.testlist)
-        self.assertEqual(self.testClassJson.sizeFile(), getsize(self.testClassJson.nameFile))
+        # Проверка определение размера файла
+        self.testClassJson.writeFile(self.testlist, sort_keys=False)
+        self.assertEqual(self.testClassJson.sizeFile(), getsize(self.testClassJson.name_file))
 
     def test_deleteFile_and_checkExistenceFile(self):
         # Проверка удаление файла
@@ -127,7 +130,7 @@ class TestJson(unittest.TestCase):
         self.assertEqual(self.testClassJson.checkExistenceFile(), False)
 
     def test_writeJsonFile_and_readJsonFile(self):
-        # Првоекра записи в файл разных структур данных
+        # Проверка записи в файл разных структур данных
         # List
         self.testClassJson.deleteFile()
         self.testClassJson.createFileIfDoesntExist()
@@ -173,7 +176,7 @@ class TestCsvFile(unittest.TestCase):
         self.cvs_file.deleteFile()
 
     def test_init_(self):
-        # Реакция на некоректное им файла
+        # Реакция на некорректное им файла
         self.assertRaises(ValueError, CsvFile, "test.txt")
 
     def test_writeFile_and_readFile(self):
@@ -236,7 +239,7 @@ class TestCsvFile(unittest.TestCase):
                           ['13', '233', '26', '45'], ['12', '213', '43', '56'], ['2323', '23233', '23']])
 
     def test_ordinary(self):
-        # Тест записи Однмерного массива
+        # Тест записи одномерного массива
 
         self.cvs_file.deleteFile()
         self.cvs_file.writeFile([123, 123, 222, 1, 312, 223, 2], FlagDataConferToStr=True)
@@ -247,9 +250,9 @@ class TestCsvFile(unittest.TestCase):
         self.cvs_file.appendFile([123, 123, 222, 1, 312, 223, 2], FlagDataConferToStr=True)
         self.cvs_file.appendFile([123, 123, 222, 1, 2], FlagDataConferToStr=True)
         self.cvs_file.appendFile([123, 123, '222', 1], FlagDataConferToStr=True)
-        self.cvs_file.appendFile([123, 222, 1, 2])
+        self.cvs_file.appendFile(['123', '222', '1', '2'])
 
-        # Тест записи дмумерного массива
+        # Тест записи двумерного массива
         self.cvs_file.deleteFile()
         self.cvs_file.writeFile(
             [[123, 123, 222, 1, 312, 223, 2],

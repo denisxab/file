@@ -5,7 +5,7 @@ from re import findall
 from sqlite3 import Binary
 from typing import List, Tuple, Dict, Union
 
-from mg_file.file.file import TxtFile
+from mg_file.file.base_file import TxtFile
 from mg_file.sqllite_orm.sqlmodules import *
 
 
