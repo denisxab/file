@@ -1,97 +1,62 @@
+from abc import abstractmethod
 from pprint import pformat
+from typing import Any
 
 from loguru import logger
 
-# !!!
-import sql_raw.base_sql
+from sql_raw.base_serializer import Efetch
 
 
-def connect_db(fun):
-    """
-    Декоратор для создать подключение к БД
-    """
+class BaseSql:
 
-    def wrapper(*arg, **kwargs):
+    def connect_db(self, *args, **kwargs) -> Any:
         try:
-            with sql_raw.base_sql.CONNECT(**sql_raw.base_sql.SETTINGS_DB) as connection:
-                res = fun(connection, *arg, **kwargs)
-            return res
-        except sql_raw.base_sql.ERROR as e:
+            with self.CONNECT(**self.SETTINGS_DB) as connection:
+                return connection
+        except self.ERROR as e:
             logger.error(e)
             raise e
 
-    return wrapper
+    @abstractmethod
+    def mutable_command(self, _connection, execute: str, params: tuple | dict | list, *args, **kwargs):
+        """
+        Декоратор для выполнения изменяемой SQL команды
+        """
+        return NotImplemented()
 
+    @abstractmethod
+    def read_command(self, _connection, execute: str, params: tuple | dict | list = (), tdata: Efetch = Efetch.n, *args,
+                     **kwargs):
+        """
+        Декоратор для выполнения чтения из БД
+        """
+        return NotImplemented()
 
-def mutable_command(*args, **kwargs):
-    """
-    Декоратор для выполнения изменяемой SQL команды
-    """
+    @staticmethod
+    def pprint_deco(d: Any) -> str:
+        """
+        Декоратор для красивого вывода результата функции в консоль
+        """
+        return pformat(d)
 
-    def wrapper(fun):
-        def decorated_function(_connection, *arg, **kwarg) -> str:
-            return sql_raw.base_sql.MUTABLE_COMMAND_A(_connection, *fun(*arg, **kwargs), *args, *arg, **kwargs, **kwarg)
+    def rsql(self, execute: str, params: tuple | dict | list = (), tdata: Efetch = Efetch.n, *args,
+             **kwargs) -> tuple[str, tuple | dict | list]:
+        """
+        Чтение из БД
+        """
+        return self.read_command(self.connect_db(), execute, params, tdata)
 
-        return decorated_function
+    def Rsql(self, execute: str, params: tuple | dict | list = (), tdata: Efetch = Efetch.n, *args,
+             **kwargs) -> str:
+        """
+        Чтение из БД с красивым выводом в консоль
+        """
+        return self.pprint_deco(self.read_command(self.connect_db(), execute, params, tdata))
 
-    return wrapper
+    def wsql(self, execute: str, params: tuple | dict | list = ()) -> tuple[str, tuple | dict | list]:
+        """
+        Внесение изменений в БД
+        """
+        return self.mutable_command(self.connect_db(), execute, params)
 
-
-def read_command(*args, **kwargs):
-    """
-    Декоратор для выполнения чтения из БД
-
-    @param tdata: Тип возвращаемого объекта
-        - "d" - dictfetchall
-        - "n" - namedtuplefetchall
-        - "o" - fetchone
-        - "a" - fetchall
-    """
-
-    def wrapper(fun):
-        def decorated_function(_connection, *arg, **kwarg) -> any:
-            return sql_raw.base_sql.READ_COMMAND_A(_connection, *fun(*arg, **kwargs), *args, *arg,
-                                                   **kwargs, **kwarg)
-
-        return decorated_function
-
-    return wrapper
-
-
-def pprint_deco(fun):
-    """
-    Декоратор для красивого вывода результата функции в консоль
-    """
-
-    def wrapper(*arg, **kwargs):
-        return pformat(fun(*arg, **kwargs))
-
-    return wrapper
-
-
-@connect_db
-@read_command()
-def rsql(execute: str, params: tuple | dict | list = ()) -> tuple[str, tuple | dict | list]:
-    """
-    Чтение из БД
-    """
-    return execute, params
-
-
-@pprint_deco
-@connect_db
-@read_command()
-def Rsql(execute: str, params: tuple | dict | list = ()) -> tuple[str, tuple | dict | list]:
-    """
-    Чтение из БД с красивым выводом в консоль
-    """
-    return execute, params
-
-
-@connect_db
-@mutable_command()
-def wsql(execute: str, params: tuple | dict | list = ()) -> tuple[str, tuple | dict | list]:
-    """
-    Внесение изменений в БД
-    """
-    return execute, params
+###########################################

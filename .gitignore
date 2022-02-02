@@ -6,3 +6,4 @@ mg_file/__pycache__/
 mg_file/file/__pycache__/
 mg_file/sqllite_orm/__pycache__/
 
+# poetry publish --username denisxab --password 'ПАРОЛЬ'
