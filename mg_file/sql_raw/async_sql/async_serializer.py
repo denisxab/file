@@ -24,11 +24,11 @@ async def namedtuplefetchall(cursor) -> list[namedtuple]:
 
 
 async def _fetchone(cursor):
-    await cursor.fetchone()
+    return await cursor.fetchone()
 
 
 async def _fetchall(cursor):
-    await cursor.fetchall()
+    return await cursor.fetchall()
 
 
 class Efetch(Enum):

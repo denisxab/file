@@ -17,12 +17,7 @@ class BaseTasks:
     """
 
     def __init__(self):
-        self.__tasks: deque[Coroutine] = deque()
-
-    @property
-    def tasks(self) -> deque[Coroutine]:  # GET
-        """Получить список задач"""
-        return self.__tasks
+        self.tasks: deque[Coroutine] = deque()
 
     @staticmethod
     async def _run(tasks: deque[Coroutine]):
@@ -31,15 +26,17 @@ class BaseTasks:
 
     def executeTasks(self):
         """Запустить выполнения задач"""
-        return run(self._run(self.__tasks))
+        res = run(self._run(self.tasks))
+        self.tasks.clear()
+        return res
 
     def appendTask(self, coroutine: Coroutine):
         """Добавить здание в список"""
-        self.__tasks.append(coroutine)
+        self.tasks.append(coroutine)
 
     def extendTask(self, coroutine: list[Coroutine] | deque[Coroutine]):
         """Расширить список задач другим списком список"""
-        self.__tasks.extend(coroutine)
+        self.tasks.extend(coroutine)
 
 
 class AsyncBaseSql(BaseSql, BaseTasks):
