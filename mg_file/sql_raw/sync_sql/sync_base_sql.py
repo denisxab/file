@@ -62,7 +62,9 @@ class SyncBaseSql(BaseSql):
     def read_command(self, _connection,
                      execute: str,
                      params: tuple | dict | list = (),
-                     tdata: Callable = Efetch.all):
+                     tdata: Callable = Efetch.all,
+                     *args,
+                     **kwargs):
         """
         Декоратор для выполнения чтения из БД
         """
@@ -71,8 +73,20 @@ class SyncBaseSql(BaseSql):
     @abstractmethod
     def mutable_command(self, _connection,
                         execute: str,
-                        params: tuple | dict | list = ()):
+                        params: tuple | dict | list = (),
+                        *args,
+                        **kwargs):
         """
         Декоратор для выполнения изменяемой SQL команды
         """
         return NotImplemented()
+
+    @property
+    @abstractmethod
+    def CONNECT(self):
+        pass
+
+    @property
+    @abstractmethod
+    def ERROR(self):
+        ...
