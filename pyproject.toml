@@ -1,17 +1,19 @@
 [tool.poetry]
 name = "mg_file"
-version = "0.1.4"
+version = "0.1.5"
 description = "Удобное пользование файлами"
-authors = ["Ваше Имя <denis-kustov@rambler.ru>"]
+authors = ["Denis Vetkin <denis-kustov@rambler.ru>"]
 license = "BSD"
 readme = "README.md"
 homepage = "https://github.com/denisxab/mg_file"
 repository = "https://github.com/denisxab/mg_file"
-keywords = ["File"]
-exclude = ["mg_file/.idea",
+keywords = ["File", "SQL", "ORM"]
+exclude = [
+    "mg_file/.idea",
     "mg_file/venv",
     "mg_file/.git",
-    "mg_file/.gitignore"]
+    "mg_file/.gitignore"
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
