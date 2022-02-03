@@ -63,7 +63,7 @@ pip install psycopg2-binary aiopg
 ```
 
 ```python
-from mg_file.sql_raw.async_sql.async_postgres_sql import Config
+from mg_file.sql_raw.async_sql.asyncpg_postgres_sql import Config
 from mg_file.sql_raw.async_sql.async_serializer import Efetch
 
 NAME_DB = "test_db"

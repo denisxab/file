@@ -1,11 +1,10 @@
-from typing import Any, Callable
+from abc import ABC, ABCMeta
+from typing import Any
 
 
-class BaseSql:
+class BaseSql(metaclass=ABCMeta):
     def __init__(self, user: str, password: str,
-                 host: str = "localhost"):
-        self.SETTINGS_DB: dict[str, Any] = {"host": host,
-                                            "user": user,
-                                            "password": password}
-        self.CONNECT: object | Callable | None = None
-        self.ERROR: BaseException | None = None
+                 host: str = "localhost", ):
+        self.SETTINGS_DB: dict[str, Any] | str = {"host": host,
+                                                  "user": user,
+                                                  "password": password}

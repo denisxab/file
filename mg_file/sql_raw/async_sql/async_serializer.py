@@ -1,6 +1,26 @@
+from abc import ABCMeta
+from collections import deque
 from collections import namedtuple
 from enum import Enum
-from typing import Callable, Any
+from typing import Any, Coroutine, Callable
+
+
+class BaseTasks(metaclass=ABCMeta):
+    """
+    Базовый класс для списка асинхронных задач.
+    Используются как примесь к асинхронному классу `AsyncBaseSql`
+    """
+
+    def __init__(self):
+        self.tasks: deque[Coroutine] = deque()
+
+    def appendTask(self, coroutine: Coroutine):
+        """Добавить здание в список"""
+        self.tasks.append(coroutine)
+
+    def extendTask(self, coroutine: list[Coroutine] | deque[Coroutine]):
+        """Расширить список задач другим списком список"""
+        self.tasks.extend(coroutine)
 
 
 async def dictfetchall(cursor) -> list[dict[str, Any]]:
