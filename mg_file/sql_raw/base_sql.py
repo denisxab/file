@@ -1,9 +1,11 @@
-from typing import Callable, Any
+from typing import Any, Callable
 
-# Необходимо переопределить
-CONNECT: Callable | object | None = None
-ERROR: BaseException | None = None
-MUTABLE_COMMAND_A: Callable[[Any, str, tuple | dict | list], Any] | None = None
-READ_COMMAND_A: Callable[[Any, str, tuple | dict | list], Any] | None = None
-# Переопределится в функции `Config`
-SETTINGS_DB: dict | None = None
+
+class BaseSql:
+    def __init__(self, user: str, password: str,
+                 host: str = "localhost"):
+        self.SETTINGS_DB: dict[str, Any] = {"host": host,
+                                            "user": user,
+                                            "password": password}
+        self.CONNECT: object | Callable | None = None
+        self.ERROR: BaseException | None = None

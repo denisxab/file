@@ -27,4 +27,4 @@ class Efetch(Enum):
     d: Callable[[Any], list[dict[str, Any]]] = dictfetchall
     n: Callable[[Any], list[namedtuple]] = namedtuplefetchall
     o: Callable[[Any], Any] = lambda _cursor: _cursor.fetchone()
-    a: Callable[[Any], Any] = lambda _cursor: _cursor.fetchall()
+    a: Callable[[Any], Any] =  lambda _cursor: _cursor.fetchall()

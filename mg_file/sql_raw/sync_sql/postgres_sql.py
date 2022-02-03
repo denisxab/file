@@ -4,19 +4,22 @@
 
 from typing import Any, Callable
 
-from mg_file.sql_raw.base_deco import BaseSql, Efetch
+from ..base_serializer import Efetch
+from .base_sync_sql import SyncBaseSql
 
 
-class Config(BaseSql):
-    def __init__(self, user: str, password: str, database: str | None = None,
+class Config(SyncBaseSql):
+    def __init__(self, user: str,
+                 password: str,
+                 database: str | None = None,
                  port: int = 5432,
                  host: str = "localhost"):
         from psycopg2 import connect, OperationalError
-        self.SETTINGS_DB = {"host": host,
-                            "port": port,
-                            "user": user,
-                            "database": database,
-                            "password": password}
+        super().__init__(user, password, host)
+        self.SETTINGS_DB.update({
+            "port": port,
+            "database": database,
+        })
         self.CONNECT = connect
         self.ERROR = OperationalError
 

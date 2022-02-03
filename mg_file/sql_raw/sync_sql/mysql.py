@@ -4,21 +4,20 @@
 
 from typing import Callable
 
-from mg_file.sql_raw.base_deco import BaseSql, Efetch
+from ..base_serializer import Efetch
+from .base_sync_sql import SyncBaseSql
 
 
-class Config(BaseSql):
+class Config(SyncBaseSql):
     def __init__(self, user: str, password: str, dbname: str | None = None,
                  port: int = 3306,
                  host: str = "localhost"):
         from mysql.connector import connect, Error
-
-        self.SETTINGS_DB = {"host": host,
-                            "port": port,
-                            "user": user,
-                            "dbname": dbname,
-                            "password": password}
-
+        super().__init__(user, password, host)
+        self.SETTINGS_DB.update({
+            "port": port,
+            "dbname": dbname,
+        })
         self.CONNECT = connect
         self.ERROR = Error
 

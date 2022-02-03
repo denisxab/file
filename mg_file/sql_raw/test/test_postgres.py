@@ -1,12 +1,85 @@
 # from sql_raw.base_deco import wsql
-from mg_file import Efetch
-from sql_raw.postgres_sql import Config
+import time
 
-db = Config(user="postgres", password="root", database="fast_api")
+import sql_raw.async_sql.async_postgres_sql
+import sql_raw.sync_sql.postgres_sql
 
 
-def test_read():
-    print(db.Rsql("SELECT * FROM пользователь;"))
+def test_asyncread():
+    db = sql_raw.async_postgres_sql.Config(user="postgres", password="root", database="fast_api")
+
+    async def main():
+        st = time.process_time()
+        await db.Rsql("SELECT * FROM пользователь;")
+        await db.Rsql("SELECT id FROM пользователь;")
+        await db.Rsql("SELECT * FROM пользователь;")
+        await db.Rsql("SELECT * FROM пользователь;")
+        await db.Rsql("SELECT * FROM пользователь;")
+        await db.Rsql("SELECT id FROM пользователь;")
+        await db.Rsql("SELECT * FROM пользователь;")
+        await db.Rsql("SELECT * FROM пользователь;")
+        await db.Rsql("SELECT * FROM пользователь;")
+        await db.Rsql("SELECT id FROM пользователь;")
+        await db.Rsql("SELECT * FROM пользователь;")
+        await db.Rsql("SELECT * FROM пользователь;")
+        print("async_sql", time.process_time() - st)
+
+    def te():
+        st = time.process_time()
+        db.extendTask([
+            db.Rsql("SELECT * FROM пользователь;"),
+            db.Rsql("SELECT id FROM пользователь;"),
+            db.Rsql("SELECT * FROM пользователь;"),
+        ])
+        db.appendTask(db.Rsql("SELECT * FROM пользователь;"))
+        print(db.executeTasks())
+        print("async_sql", time.process_time() - st)
+
+    te()
+
+    # loop = asyncio.get_event_loop()
+    # loop.run_until_complete(main())
+
+
+def test_sync_read():
+    db = sql_raw.postgres_sql.Config(user="postgres", password="root", database="fast_api")
+    st = time.process_time()
+    db.Rsql("SELECT * FROM пользователь;")
+    db.Rsql("SELECT id FROM пользователь;")
+    db.Rsql("SELECT * FROM пользователь;")
+    db.Rsql("SELECT * FROM пользователь;")
+    db.Rsql("SELECT * FROM пользователь;")
+    db.Rsql("SELECT id FROM пользователь;")
+    db.Rsql("SELECT * FROM пользователь;")
+    db.Rsql("SELECT * FROM пользователь;")
+    db.Rsql("SELECT * FROM пользователь;")
+    db.Rsql("SELECT id FROM пользователь;")
+    db.Rsql("SELECT * FROM пользователь;")
+    db.Rsql("SELECT * FROM пользователь;")
+    print("sync_sql", time.process_time() - st)
+
+
+def test_main_test():
+    test_asyncread()
+    # test_sync_read()
+
+# async_sql def go():
+#     async_sql with aiopg.create_pool() as pool:
+#         async_sql with pool.acquire() as conn:
+#             async_sql with conn.cursor() as cur:
+#                 await cur.execute("SELECT * FROM пользователь;")
+#                 ret = await cur.fetchall()
+#                 print(ret)
+#
+# async_sql def go_2():
+#     async_sql with aiopg.connect('dbname=fast_api user=postgres password=root host=127.0.0.1') as _conn:
+#         async_sql with _conn.cursor() as _cur:
+#             await _cur.execute("SELECT * FROM пользователь")
+#             ret = await _cur.fetchall()
+#             print(ret)
+
+
+# print(db.Rsql("SELECT * FROM пользователь;", tdata=Efetch.a))
 
 # def test_write():
 #     wsql("INSERT INTO пользователь (id,f_name, l_name) VALUES (16,'t', 'd');")
