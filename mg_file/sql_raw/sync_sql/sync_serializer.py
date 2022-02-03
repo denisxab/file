@@ -24,7 +24,7 @@ def namedtuplefetchall(cursor) -> list[namedtuple]:
 
 
 class Efetch(Enum):
-    d: Callable[[Any], list[dict[str, Any]]] = dictfetchall
-    n: Callable[[Any], list[namedtuple]] = namedtuplefetchall
-    o: Callable[[Any], Any] = lambda _cursor: _cursor.fetchone()
-    a: Callable[[Any], Any] =  lambda _cursor: _cursor.fetchall()
+    dict_: Callable[[Any], list[dict[str, Any]]] = dictfetchall
+    namedtuple: Callable[[Any], list[namedtuple]] = namedtuplefetchall
+    one: Callable[[Any], Any] = lambda _cursor: _cursor.fetchone()
+    all: Callable[[Any], Any] = lambda _cursor: _cursor.fetchall()

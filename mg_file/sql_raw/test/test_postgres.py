@@ -1,67 +1,155 @@
-# from sql_raw.base_deco import wsql
-import time
-
 import sql_raw.async_sql.async_postgres_sql
-import sql_raw.sync_sql.postgres_sql
+import sql_raw.async_sql.async_postgres_sql
+import sql_raw.async_sql.async_postgres_sql
+import sql_raw.async_sql.async_serializer
+import sql_raw.sync_sql.sync_postgres_sql
+import sql_raw.sync_sql.sync_serializer
+
+NAME_DB = "fast_test"
+NAME_TABEL = "test_tabel"
+
+Refresh_TABLE = f"""
+DROP TABLE IF EXISTS {NAME_TABEL};
+CREATE TABLE {NAME_TABEL}
+(
+    id    serial PRIMARY KEY,
+    email varchar(255),
+    buy   money
+);
+"""
 
 
-def test_asyncread():
-    db = sql_raw.async_postgres_sql.Config(user="postgres", password="root", database="fast_api")
+def refresh_db():
+    """
+     Если `FATAL: Peer authentication failed for user "postgres"`
 
-    async def main():
-        st = time.process_time()
-        await db.Rsql("SELECT * FROM пользователь;")
-        await db.Rsql("SELECT id FROM пользователь;")
-        await db.Rsql("SELECT * FROM пользователь;")
-        await db.Rsql("SELECT * FROM пользователь;")
-        await db.Rsql("SELECT * FROM пользователь;")
-        await db.Rsql("SELECT id FROM пользователь;")
-        await db.Rsql("SELECT * FROM пользователь;")
-        await db.Rsql("SELECT * FROM пользователь;")
-        await db.Rsql("SELECT * FROM пользователь;")
-        await db.Rsql("SELECT id FROM пользователь;")
-        await db.Rsql("SELECT * FROM пользователь;")
-        await db.Rsql("SELECT * FROM пользователь;")
-        print("async_sql", time.process_time() - st)
+     1. Установить или сменить пароль для пользователя `postgres`
+         `sudo passwd postgres;`
 
-    def te():
-        st = time.process_time()
-        db.extendTask([
-            db.Rsql("SELECT * FROM пользователь;"),
-            db.Rsql("SELECT id FROM пользователь;"),
-            db.Rsql("SELECT * FROM пользователь;"),
-        ])
-        db.appendTask(db.Rsql("SELECT * FROM пользователь;"))
-        print(db.executeTasks())
-        print("async_sql", time.process_time() - st)
-
-    te()
-
-    # loop = asyncio.get_event_loop()
-    # loop.run_until_complete(main())
+     2. Изменить способ подключения е БД
+         `sudo micro /etc/postgresql/12/main/pg_hba.conf`
+         "
+         local   all             postgres                                password
+         "
+     3. Перезагрузить БД
+         `sudo systemctl restart  postgresql`
+     """
+    # Подключаемся к СУБД
+    db = sql_raw.sync_sql.sync_postgres_sql.Config(user="postgres", password="root")
+    # Удаляем БД
+    db.wsql(f"DROP DATABASE IF EXISTS {NAME_DB};", autocommit=True)
+    # Создаем БД
+    db.wsql(f"CREATE DATABASE {NAME_DB};", autocommit=True)
 
 
-def test_sync_read():
-    db = sql_raw.postgres_sql.Config(user="postgres", password="root", database="fast_api")
-    st = time.process_time()
-    db.Rsql("SELECT * FROM пользователь;")
-    db.Rsql("SELECT id FROM пользователь;")
-    db.Rsql("SELECT * FROM пользователь;")
-    db.Rsql("SELECT * FROM пользователь;")
-    db.Rsql("SELECT * FROM пользователь;")
-    db.Rsql("SELECT id FROM пользователь;")
-    db.Rsql("SELECT * FROM пользователь;")
-    db.Rsql("SELECT * FROM пользователь;")
-    db.Rsql("SELECT * FROM пользователь;")
-    db.Rsql("SELECT id FROM пользователь;")
-    db.Rsql("SELECT * FROM пользователь;")
-    db.Rsql("SELECT * FROM пользователь;")
-    print("sync_sql", time.process_time() - st)
+class Test_Sync:
+
+    def setup(self):
+        refresh_db()
+        # Подключаемся к БД
+        self.db = sql_raw.sync_sql.sync_postgres_sql.Config(user="postgres", password="root", database=NAME_DB)
+        # Создаем таблицу
+        self.db.wsql(Refresh_TABLE)
+
+    def test_write(self):
+        self.db.wsql(f"""
+        INSERT INTO {NAME_TABEL} (id, email, buy)
+        VALUES (1, 'dcurrington0@umn.edu', 955),
+               (2, 'rhartland1@blog.com', 430),
+               (3, 'zkinton2@so-net.ne.jp', 817),
+               (4, 'btuison6@themeforest.net', 281),
+               (5, 'gczajka4@tinypic.com', 610),
+               (6, 'btuison6@themeforest.net', 281),
+               (7, 'btuison6@themeforest.net', 281),
+               (8, 'aclancy7@tmall.com', 884),
+               (9, 'zkinton2@so-net.ne.jp', 817),
+               (10, 'ndelaperrelle9@smh.com.au', 523);
+        """)
+        assert self.db.Rsql(
+            f"SELECT * FROM {NAME_TABEL}") == "[(1, 'dcurrington0@umn.edu', '955,00 ₽'),\n (2, 'rhartland1@blog.com', '430,00 ₽'),\n (3, 'zkinton2@so-net.ne.jp', '817,00 ₽'),\n (4, 'btuison6@themeforest.net', '281,00 ₽'),\n (5, 'gczajka4@tinypic.com', '610,00 ₽'),\n (6, 'btuison6@themeforest.net', '281,00 ₽'),\n (7, 'btuison6@themeforest.net', '281,00 ₽'),\n (8, 'aclancy7@tmall.com', '884,00 ₽'),\n (9, 'zkinton2@so-net.ne.jp', '817,00 ₽'),\n (10, 'ndelaperrelle9@smh.com.au', '523,00 ₽')]"
+
+        assert self.db.rsql(f"SELECT * FROM {NAME_TABEL}") == [
+            (1, 'dcurrington0@umn.edu', '955,00 ₽'),
+            (2, 'rhartland1@blog.com', '430,00 ₽'),
+            (3, 'zkinton2@so-net.ne.jp', '817,00 ₽'),
+            (4, 'btuison6@themeforest.net', '281,00 ₽'),
+            (5, 'gczajka4@tinypic.com', '610,00 ₽'),
+            (6, 'btuison6@themeforest.net', '281,00 ₽'),
+            (7, 'btuison6@themeforest.net', '281,00 ₽'),
+            (8, 'aclancy7@tmall.com', '884,00 ₽'),
+            (9, 'zkinton2@so-net.ne.jp', '817,00 ₽'),
+            (10, 'ndelaperrelle9@smh.com.au', '523,00 ₽')]
+
+        assert self.db.rsql(f"SELECT * FROM {NAME_TABEL}", tdata=sql_raw.sync_sql.sync_serializer.Efetch.dict_) == [
+            {'id': 1, 'email': 'dcurrington0@umn.edu', 'buy': '955,00 ₽'},
+            {'id': 2, 'email': 'rhartland1@blog.com', 'buy': '430,00 ₽'},
+            {'id': 3, 'email': 'zkinton2@so-net.ne.jp', 'buy': '817,00 ₽'},
+            {'id': 4, 'email': 'btuison6@themeforest.net', 'buy': '281,00 ₽'},
+            {'id': 5, 'email': 'gczajka4@tinypic.com', 'buy': '610,00 ₽'},
+            {'id': 6, 'email': 'btuison6@themeforest.net', 'buy': '281,00 ₽'},
+            {'id': 7, 'email': 'btuison6@themeforest.net', 'buy': '281,00 ₽'},
+            {'id': 8, 'email': 'aclancy7@tmall.com', 'buy': '884,00 ₽'},
+            {'id': 9, 'email': 'zkinton2@so-net.ne.jp', 'buy': '817,00 ₽'},
+            {'id': 10, 'email': 'ndelaperrelle9@smh.com.au', 'buy': '523,00 ₽'}]
+
+        assert self.db.Rsql(f"SELECT * FROM {NAME_TABEL}",
+                            tdata=sql_raw.sync_sql.sync_serializer.Efetch.namedtuple) == "[_(id=1, email='dcurrington0@umn.edu', buy='955,00 ₽'),\n _(id=2, email='rhartland1@blog.com', buy='430,00 ₽'),\n _(id=3, email='zkinton2@so-net.ne.jp', buy='817,00 ₽'),\n _(id=4, email='btuison6@themeforest.net', buy='281,00 ₽'),\n _(id=5, email='gczajka4@tinypic.com', buy='610,00 ₽'),\n _(id=6, email='btuison6@themeforest.net', buy='281,00 ₽'),\n _(id=7, email='btuison6@themeforest.net', buy='281,00 ₽'),\n _(id=8, email='aclancy7@tmall.com', buy='884,00 ₽'),\n _(id=9, email='zkinton2@so-net.ne.jp', buy='817,00 ₽'),\n _(id=10, email='ndelaperrelle9@smh.com.au', buy='523,00 ₽')]"
+
+        assert self.db.rsql(f"SELECT * FROM {NAME_TABEL}",
+                            tdata=sql_raw.sync_sql.sync_serializer.Efetch.one) == (
+                   1, 'dcurrington0@umn.edu', '955,00 ₽')
 
 
-def test_main_test():
-    test_asyncread()
-    # test_sync_read()
+class Test_Async:
+
+    def setup(self):
+        refresh_db()
+        # Подключаемся к БД
+        self.db = sql_raw.async_sql.async_postgres_sql.Config(user="postgres", password="root", database=NAME_DB)
+        # Создаем таблицу
+        self.db.appendTask(self.db.wsql(Refresh_TABLE))
+        self.db.executeTasks()
+
+    def test_write(self):
+        ...
+
+#
+#
+# def test_async_read():
+#     db = sql_raw.async_postgres_sql.Config(user="postgres", password="root", database="fast_api")
+#
+#     st = time.process_time()
+#     db.extendTask([
+#         db.rsql("SELECT * FROM пользователь;", tdata=Efetch.dict_),
+#         db.rsql("SELECT id FROM пользователь;"),
+#         db.rsql("SELECT * FROM пользователь;"),
+#     ])
+#     db.appendTask(db.rsql("SELECT * FROM пользователь;"))
+#     pprint(db.executeTasks())
+#     print("async_sql", time.process_time() - st)
+#
+#
+# def test_sync_read():
+#     db = sql_raw.postgres_sql.Config(user="postgres", password="root", database="fast_api")
+#     st = time.process_time()
+#     db.Rsql("SELECT * FROM пользователь;")
+#     db.Rsql("SELECT id FROM пользователь;")
+#     db.Rsql("SELECT * FROM пользователь;")
+#     db.Rsql("SELECT * FROM пользователь;")
+#     db.Rsql("SELECT * FROM пользователь;")
+#     db.Rsql("SELECT id FROM пользователь;")
+#     db.Rsql("SELECT * FROM пользователь;")
+#     db.Rsql("SELECT * FROM пользователь;")
+#     db.Rsql("SELECT * FROM пользователь;")
+#     db.Rsql("SELECT id FROM пользователь;")
+#     db.Rsql("SELECT * FROM пользователь;")
+#     db.Rsql("SELECT * FROM пользователь;")
+#     print("sync_sql", time.process_time() - st)
+#
+#
+# def test_main_test():
+#     test_asyncread()
+#     # test_sync_read()
 
 # async_sql def go():
 #     async_sql with aiopg.create_pool() as pool:
@@ -77,7 +165,6 @@ def test_main_test():
 #             await _cur.execute("SELECT * FROM пользователь")
 #             ret = await _cur.fetchall()
 #             print(ret)
-
 
 # print(db.Rsql("SELECT * FROM пользователь;", tdata=Efetch.a))
 

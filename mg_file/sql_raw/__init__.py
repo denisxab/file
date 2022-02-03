@@ -1,4 +1,3 @@
-from .base_serializer import *
 from .base_sql import *
 from .base_user import *
 from .sync_sql import *

@@ -1,11 +1,12 @@
-import asyncio
 from abc import abstractmethod
+from asyncio import run, gather
+from collections import deque
 from pprint import pformat
 from typing import Any, Coroutine, Callable
 
 from loguru import logger
 
-from ..base_serializer import Efetch
+from .async_serializer import Efetch
 from ..base_sql import BaseSql
 
 
@@ -16,27 +17,27 @@ class BaseTasks:
     """
 
     def __init__(self):
-        self.__tasks: list[Coroutine] = []
+        self.__tasks: deque[Coroutine] = deque()
 
     @property
-    def tasks(self) -> Any:  # GET
+    def tasks(self) -> deque[Coroutine]:  # GET
         """Получить список задач"""
         return self.__tasks
 
     @staticmethod
-    async def _run(tasks: list):
+    async def _run(tasks: deque[Coroutine]):
         """Выполнить список задач"""
-        return await asyncio.gather(*tasks)
+        return await gather(*tasks)
 
     def executeTasks(self):
         """Запустить выполнения задач"""
-        return asyncio.run(self._run(self.__tasks))
+        return run(self._run(self.__tasks))
 
     def appendTask(self, coroutine: Coroutine):
         """Добавить здание в список"""
         self.__tasks.append(coroutine)
 
-    def extendTask(self, coroutine: list[Coroutine]):
+    def extendTask(self, coroutine: list[Coroutine] | deque[Coroutine]):
         """Расширить список задач другим списком список"""
         self.__tasks.extend(coroutine)
 
@@ -48,10 +49,14 @@ class AsyncBaseSql(BaseSql, BaseTasks):
 
     def __init__(self, user: str, password: str,
                  host: str = "localhost"):
-        super().__init__(user, password, host)
+        BaseSql.__init__(self, user, password, host)
         BaseTasks.__init__(self)
 
     async def connect_db(self, fun: Callable, *args, **kwargs) -> Any:
+        """
+        Так как у нас всегда включен `autocommit` мы
+        можем использовать контекстный менеджер `with`
+        """
         try:
             async with self.CONNECT(self.SETTINGS_DB) as connection:
                 return await fun(connection, *args, **kwargs)
@@ -59,40 +64,46 @@ class AsyncBaseSql(BaseSql, BaseTasks):
             logger.error(e)
             raise e
 
-    async def Rsql(self, execute: str, params: tuple | dict | list = (), tdata: Efetch = Efetch.n, *args,
-                   **kwargs) -> str:
-        """
-        Чтение из БД с красивым выводом в консоль
-        """
-        return await self.pprint_deco(self.rsql, execute, params, tdata)
-
-    async def rsql(self, execute: str, params: tuple | dict | list = (), tdata: Efetch = Efetch.n, *args,
-                   **kwargs) -> str:
+    async def rsql(self, execute: str, params: tuple | dict | list = (), tdata: Callable = Efetch.all) -> str:
         """
         Чтение из БД
         """
         return await self.connect_db(self.read_command, execute=execute, params=params, tdata=tdata)
 
+    async def Rsql(self, execute: str, params: tuple | dict | list = (), tdata: Callable = Efetch.all) -> str:
+        """
+        Чтение из БД с красивым выводом в консоль
+        """
+        return await self.pprint_deco(self.rsql, execute, params, tdata)
+
+    async def wsql(self, execute: str, params: tuple | dict | list = ()) -> tuple[
+        str, tuple | dict | list]:
+        """
+        Внесение изменений в БД
+        """
+        return await self.connect_db(self.mutable_command, execute=execute, params=params)
+
     @staticmethod
-    async def pprint_deco(fun: Callable, execute: str, params: tuple | dict | list = (),
-                          tdata: Efetch = Efetch.n, ) -> str:
+    async def pprint_deco(fun: Callable, execute: str,
+                          params: tuple | dict | list = (),
+                          tdata: Callable = Efetch.all, ) -> str:
         """
         Декоратор для красивого вывода результата функции в консоль
         """
         return pformat(await fun(execute, params, tdata))
 
     @abstractmethod
-    async def read_command(self, _connection, execute: str, params: tuple | dict | list = (), tdata: Efetch = Efetch.n,
-                           *args,
-                           **kwargs):
+    async def read_command(self, _connection, execute: str,
+                           params: tuple | dict | list = (),
+                           tdata: Callable = Efetch.all):
         """
-        Декоратор для выполнения чтения из БД
+        Метод для выполнения чтения из БД
         """
         return NotImplemented()
 
     @abstractmethod
-    async def mutable_command(self, _connection, execute: str, params: tuple | dict | list, *args, **kwargs):
+    async def mutable_command(self, _connection, execute: str, params: tuple | dict | list = (), ):
         """
-        Декоратор для выполнения изменяемой SQL команды
+        Метод для выполнения записи в БД
         """
         return NotImplemented()

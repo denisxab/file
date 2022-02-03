@@ -4,15 +4,15 @@
 
 from typing import Callable
 
-from ..base_serializer import Efetch
-from .base_sync_sql import SyncBaseSql
+from .sync_serializer import Efetch
+from .sync_base_sql import SyncBaseSql
 
 
 class Config(SyncBaseSql):
     def __init__(self, user: str, password: str, dbname: str | None = None,
                  port: int = 3306,
                  host: str = "localhost"):
-        from mysql.connector import connect, Error
+        from sync_mysql.connector import connect, Error
         super().__init__(user, password, host)
         self.SETTINGS_DB.update({
             "port": port,
@@ -32,7 +32,7 @@ class Config(SyncBaseSql):
         return cursor.statement
 
     def read_command(self, _connection, execute: str, params: tuple | dict | list = (),
-                     tdata: Callable = Efetch.n,
+                     tdata: Callable = Efetch.all,
                      *args,
                      **kwargs):
         """
