@@ -37,7 +37,7 @@ def refresh_db():
     # Подключаемся к СУБД
     db = sql_raw.sync_sql.sync_postgres_sql.Config(user="postgres", password="root")
     # Удаляем БД
-    db.wsql(f"DROP DATABASE IF EXISTS {NAME_DB};", autocommit=True)
+    print(db.wsql(f"DROP DATABASE IF EXISTS {NAME_DB};", autocommit=True))
     # Создаем БД
     db.wsql(f"CREATE DATABASE {NAME_DB};", autocommit=True)
 

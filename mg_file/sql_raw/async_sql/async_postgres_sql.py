@@ -54,8 +54,7 @@ class Config(AsyncBaseSql):
                            tdata: Callable = Efetch.all, ) -> Any:
         async with _connection.cursor() as _cur:
             await _cur.execute(execute, params)
-            ret = await tdata(_cur)
-            return ret
+            return await tdata(_cur)
 
     async def mutable_command(self, _connection,
                               execute: str,
