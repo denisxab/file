@@ -1,7 +1,7 @@
 from json import load, dump
 from typing import Any, Union
 
-from .base_file import BaseFile
+from .base_file import BaseFile, ConcatData
 
 
 class JsonFile(BaseFile):

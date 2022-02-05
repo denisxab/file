@@ -80,13 +80,7 @@ class BaseFile:
         """
         Получить хеш сумму файла
         """
-        h = sha256()
-        b = bytearray(128 * 1024)
-        mv = memoryview(b)
-        with open(self.name_file, 'rb', buffering=0) as f:
-            for n in iter(lambda: f.readinto(mv), 0):
-                h.update(mv[:n])
-        return h.hexdigest()
+        return sha256sum(self.name_file)
 
     @abstractmethod
     def readFile(self, *arg) -> Any:
@@ -125,5 +119,15 @@ def ConcatData(callback: Callable, file_data: T_ConcatData, new_data: T_ConcatDa
         raise TypeError("Тип данных в файле и тип входных данных различны")
 
 
-if __name__ == '__main__':
-    pass
+def sha256sum(path_file: str):
+    """
+    Получить хеш сумму файла
+    @param path_file: Путь к файлу
+    """
+    h = sha256()
+    b = bytearray(128 * 1024)
+    mv = memoryview(b)
+    with open(path_file, 'rb', buffering=0) as f:
+        for n in iter(lambda: f.readinto(mv), 0):
+            h.update(mv[:n])
+    return h.hexdigest()

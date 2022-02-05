@@ -5,13 +5,12 @@ from typing import Union, List
 # pip install prettytable
 from prettytable import PrettyTable
 
-from .base_file import BaseFile
+from .base_file import BaseFile, ConcatData
 
 
 class CsvFile(BaseFile):
     def __init__(self, name_file: str):
-
-        BaseFile.__init__(self, name_file, ".csv")
+        super().__init__(name_file, ".csv")
 
     def readFile(self,
                  *,
