@@ -1,4 +1,3 @@
-from os.path import splitext
 from pickle import load, dump
 from typing import Any, Union
 
@@ -9,10 +8,7 @@ class PickleFile(BaseFile):
     # https://docs.python.org/3/library/pickle.html
     def __init__(self, name_file: str):
 
-        if splitext(name_file)[1] != ".pkl":  # Проверяем расширение файла
-            raise ValueError("Файл должен иметь расширение .pkl")
-
-        BaseFile.__init__(self, name_file)
+        BaseFile.__init__(self, name_file, ".pkl")
 
     def writeFile(self, data: Any, *, protocol: int = 3):
         # Сериализовать и записать данные в файл

@@ -1,5 +1,4 @@
 from json import load, dump
-from os.path import splitext
 from typing import Any, Union
 
 from .base_file import BaseFile
@@ -11,10 +10,7 @@ class JsonFile(BaseFile):
     """
 
     def __init__(self, name_file: str):
-        if splitext(name_file)[1] != ".json":  # Проверяем расширение файла
-            raise ValueError("Файл должен иметь расширение .json")
-
-        BaseFile.__init__(self, name_file)
+        BaseFile.__init__(self, name_file, ".json")
 
     def readFile(self, **kwargs) -> Union[list, dict, int, str, float, None, bool]:
         with open(self.name_file, "r") as _jsonFile:

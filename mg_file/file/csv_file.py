@@ -1,6 +1,5 @@
 from csv import reader, writer
 from os import SEEK_END, SEEK_SET
-from os.path import splitext
 from typing import Union, List
 
 # pip install prettytable
@@ -12,10 +11,7 @@ from .base_file import BaseFile
 class CsvFile(BaseFile):
     def __init__(self, name_file: str):
 
-        if splitext(name_file)[1] != ".csv":  # Проверяем расширение файла
-            raise ValueError("Файл должен иметь расширение .csv")
-
-        BaseFile.__init__(self, name_file)
+        BaseFile.__init__(self, name_file, ".csv")
 
     def readFile(self,
                  *,

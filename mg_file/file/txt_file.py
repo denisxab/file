@@ -1,4 +1,4 @@
-from typing import Dict, Union, Any
+from typing import Dict, Union
 
 from .base_file import BaseFile
 
@@ -11,24 +11,8 @@ class TxtFile(BaseFile):
     - до записи стандартную
     """
 
-    def __init__(self, name_file: str, *, mod: str = None, encoding: str = None, data: Any = None):
-
-        tmp = name_file.split(".")
-        if any((len(tmp) != 2, tmp[1] != "txt")):
-            raise ValueError("Файл должен иметь расширение .txt")
-
-        BaseFile.__init__(self, name_file)
-
-        if mod:
-            self.res = {
-                "r": lambda: self.readFile(encoding=encoding),
-                "w": lambda: self.writeFile(data=data),
-                "rb": lambda: self.readBinaryFile(),
-                "wb": lambda: self.writeBinaryFile(data=data),
-                "a": lambda: self.appendFile(data=data),
-                "ab": lambda: self.appendBinaryFile(data=data)
-
-            }[mod]()
+    def __init__(self, name_file: str):
+        BaseFile.__init__(self, name_file, ".txt")
 
     def readFileToResDict(self, *args: str, separator: str = '\n') -> Dict[str, str]:
         """
