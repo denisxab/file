@@ -7,7 +7,7 @@ from .async_base_sql import AsyncBaseCommand
 try:
     # https://magicstack.github.io/asyncpg/current/installation.html
     # pip install asyncpg
-    from asyncpg import create_pool, Record
+    from asyncpg import create_pool
     from psycopg2 import OperationalError
 except ModuleNotFoundError:
     pass
@@ -29,13 +29,13 @@ class Config(AsyncBaseCommand):
     async def read_command(self, _connection,
                            execute: str,
                            params: tuple | dict | list = (),
-                           ) -> list[Record]:
+                           ) -> list[object]:
         return await _connection.fetch(execute, *params)
 
     async def transaction_read_command(self, _connection,
                                        execute: str,
                                        params: tuple | dict | list = (),
-                                       ) -> list[Record]:
+                                       ) -> list[object]:
         async with _connection.transaction():
             return await _connection.fetch(execute, *params)
 
@@ -50,7 +50,7 @@ class Config(AsyncBaseCommand):
         async with _connection.transaction():
             return await _connection.execute(execute)
 
-    async def test(self, execute) -> list[Record]:
+    async def test(self, execute) -> list[object]:
         """
         https://magicstack.github.io/asyncpg/current/api/index.html
 
