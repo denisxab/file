@@ -1,11 +1,15 @@
+import importlib.util
 from abc import abstractmethod
 from hashlib import sha256
+from importlib.machinery import ModuleSpec
 from os import makedirs, remove, mkdir
 from os.path import abspath, dirname, exists, getsize, splitext
+from pathlib import Path
 from shutil import rmtree
-from typing import Any, Callable
+from types import ModuleType
+from typing import Any, Callable, TypeAlias, Union, Optional
 
-T_ConcatData = list[str | int | float] | list[list[str | int | float]] | dict | set | str
+T_ConcatData: TypeAlias = Union[list[Union[str, int, float]], list[list[Union[str, int, float]]], dict, set, str]
 
 
 class BaseFile:
@@ -131,3 +135,43 @@ def sha256sum(path_file: str):
         for n in iter(lambda: f.readinto(mv), 0):
             h.update(mv[:n])
     return h.hexdigest()
+
+
+def read_file_by_module(infile: str) -> ModuleType:
+    """
+    Импортировать файл как модуль `python`
+
+    @param infile: Путь к `python` файлу
+    @return: Модуль `python`
+    """
+    # указать модуль, который должен быть импортируется относительно пути модуль
+    spec: Optional[ModuleSpec] = importlib.util.spec_from_file_location("my_module", infile)
+    # создает новый модуль на основе спецификации
+    __module: ModuleType = importlib.util.module_from_spec(spec)
+    # выполняет модуль в своем собственном пространстве имен,
+    # когда модуль импортируется или перезагружается.
+    spec.loader.exec_module(__module)
+    return __module
+
+
+def concat_absolute_dir_path(_file: str, _path: str) -> str:
+    """
+    Получить абсолютный путь папки и объединить с другим путем
+
+    :param _file:
+    :param _path:
+    :return:
+    """
+    return str(Path(_file).resolve().parent / _path)
+
+
+def absolute_path_dir(_file: str, back: int = 1) -> Path:
+    """
+    Получить абсолютный путь к своей директории
+
+    :param _file:
+    """
+    res = Path(_file).resolve()
+    for _ in range(back):
+        res = res.parent
+    return res
