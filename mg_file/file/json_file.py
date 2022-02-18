@@ -1,4 +1,4 @@
-from json import load, dump
+from json import load, dump, JSONDecodeError
 from typing import Any, Union
 
 from .base_file import BaseFile, ConcatData
@@ -13,8 +13,11 @@ class JsonFile(BaseFile):
         BaseFile.__init__(self, name_file, ".json")
 
     def readFile(self, **kwargs) -> Union[list, dict, int, str, float, None, bool]:
-        with open(self.name_file, "r") as _jsonFile:
-            return load(_jsonFile)
+        try:
+            with open(self.name_file, "r") as _jsonFile:
+                return load(_jsonFile)
+        except JSONDecodeError:
+            return None
 
     def writeFile(self, data: Union[list, dict, int, str, float, None, bool, tuple],
                   *, indent=4,
