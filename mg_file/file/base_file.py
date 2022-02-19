@@ -14,15 +14,23 @@ T_ConcatData: TypeAlias = Union[list[Union[str, int, float]], list[list[Union[st
 
 class BaseFile:
     """
-
+    Базовый класс для файлов
     """
     __slots__ = "name_file"
 
     def __init__(self, name_file: str, type_file: str):
-        if splitext(name_file)[1] != type_file:  # Проверяем расширение файла
-            raise ValueError(f"Файл должен иметь расширение {type_file}")
+        self.check_extensions_file(name_file, type_file)
         self.name_file: str = name_file
         self.createFileIfDoesntExist()
+
+    @staticmethod
+    def check_extensions_file(name_file: str, req_type: str):
+        """
+        @param name_file:
+        @param req_type:
+        """
+        if splitext(name_file)[1] != req_type:  # Проверяем расширение файла
+            raise ValueError(f"Файл должен иметь расширение {req_type}")
 
     def createFileIfDoesntExist(self):
         """
