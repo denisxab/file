@@ -11,10 +11,14 @@ class TxtFile(BaseFile):
     - до записи стандартную
     """
 
-    def __init__(self, name_file: str, *, mod: str = None, encoding: str = None, data: Any = None):
-        super().__init__(name_file, ".txt")
+    def __init__(self, name_file: str, *,
+                 mod: str = None,
+                 encoding: str = None,
+                 data: Any = None,
+                 type_file: str = ".txt"):
+        super().__init__(name_file, type_file)
         if mod:
-            self.res = {
+            self.res: Union[str, Any] = {
                 "r": lambda: self.readFile(encoding=encoding),
                 "w": lambda: self.writeFile(data=data),
                 "rb": lambda: self.readBinaryFile(),

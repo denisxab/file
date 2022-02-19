@@ -7,8 +7,9 @@ from .txt_file import TxtFile
 
 class EnvFile(TxtFile):
 
-    def __init__(self, name_file: str):
-        super(TxtFile, self).__init__(name_file, ".env")
+    def __init__(self, name_file: str, type_file: str = '.env'):
+        super().__init__(name_file, type_file=type_file)
+
         self.IS_READ_ENV_FILE: bool = False
 
     def readAndSetEnv(self):

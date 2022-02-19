@@ -2,7 +2,7 @@ from abc import ABCMeta
 from collections import deque
 from os import sep, listdir, path
 from re import match
-from typing import NamedTuple
+from typing import NamedTuple, Union
 
 from .base_file import sha256sum
 
@@ -42,7 +42,7 @@ class BaseFolder(metaclass=ABCMeta):
         # Директория из которой нужно получить файлы и папки
         self.folder: str = folder
 
-    def getAllFileAndFolder(self) -> dict[str, set[str] | str]:
+    def getAllFileAndFolder(self) -> dict[str, Union[set[str], str]]:
         """
         Получить список всех файлов и папок по указному пути.
 
@@ -91,7 +91,7 @@ class BaseFolder(metaclass=ABCMeta):
         }
 
     @classmethod
-    def sortPath(cls, arr_path: list[str] | set[str], reverse: bool = True) -> list[str]:
+    def sortPath(cls, arr_path: Union[list[str], set[str]], reverse: bool = True) -> list[str]:
         """
         Отсортировать пути.
         Для создания и удаления папок необходимо соблюдать порядок путей.

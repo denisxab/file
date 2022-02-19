@@ -9,8 +9,8 @@ from .base_file import BaseFile, ConcatData
 
 
 class CsvFile(BaseFile):
-    def __init__(self, name_file: str):
-        super().__init__(name_file, ".csv")
+    def __init__(self, name_file: str, type_file: str = ".csv"):
+        super().__init__(name_file, type_file=type_file)
 
     def readFile(self,
                  *,

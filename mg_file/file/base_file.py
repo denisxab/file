@@ -18,7 +18,7 @@ class BaseFile:
     """
     __slots__ = "name_file"
 
-    def __init__(self, name_file: str, type_file: str):
+    def __init__(self, name_file: str, type_file: str, mod: str = None):
         self.check_extensions_file(name_file, type_file)
         self.name_file: str = name_file
         self.createFileIfDoesntExist()
@@ -26,8 +26,10 @@ class BaseFile:
     @staticmethod
     def check_extensions_file(name_file: str, req_type: str):
         """
-        @param name_file:
-        @param req_type:
+        Проверить расширение файла
+
+        @param name_file: Путь к файлу
+        @param req_type: Требуемое расширение
         """
         if splitext(name_file)[1] != req_type:  # Проверяем расширение файла
             raise ValueError(f"Файл должен иметь расширение {req_type}")

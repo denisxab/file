@@ -6,9 +6,8 @@ from .base_file import BaseFile
 
 class PickleFile(BaseFile):
     # https://docs.python.org/3/library/pickle.html
-    def __init__(self, name_file: str):
-
-        BaseFile.__init__(self, name_file, ".pkl")
+    def __init__(self, name_file: str, type_file: str = ".pkl"):
+        super().__init__(name_file, type_file=type_file)
 
     def writeFile(self, data: Any, *, protocol: int = 3):
         # Сериализовать и записать данные в файл

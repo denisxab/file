@@ -9,8 +9,8 @@ class JsonFile(BaseFile):
     Работа с Json файлами
     """
 
-    def __init__(self, name_file: str):
-        BaseFile.__init__(self, name_file, ".json")
+    def __init__(self, name_file: str, type_file: str = ".json"):
+        super().__init__(name_file, type_file=type_file)
 
     def readFile(self, **kwargs) -> Union[list, dict, int, str, float, None, bool]:
         try:
