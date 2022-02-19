@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mg_file"
-version = "0.1.9"
+version = "0.1.10"
 description = "Удобное пользование файлами"
 authors = ["Denis Vetkin <denis-kustov@rambler.ru>"]
 license = "BSD"
