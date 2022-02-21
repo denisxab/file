@@ -8,4 +8,5 @@
 pip install mg-file
 ```
 
+[Документация](/mg_file/docs/build/html/index.html)
 
