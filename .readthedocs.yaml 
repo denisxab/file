@@ -1,0 +1,3 @@
+
+sphinx:
+   configuration: mg_file/docs/source/conf.py
