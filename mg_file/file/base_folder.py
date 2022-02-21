@@ -1,8 +1,9 @@
-from abc import ABCMeta
+__all__ = ["BaseFolder", "Folder", "TgetAllFileAndFolder", "DiffDir"]
+
 from collections import deque
 from os import sep, listdir, path
 from re import match
-from typing import NamedTuple, Union
+from typing import NamedTuple, Union, TypedDict, Optional
 
 from .base_file import sha256sum
 
@@ -11,19 +12,19 @@ class DiffDir(NamedTuple):
     """
     Объект для хранения разницы меду двумя директориями
     """
-    # Текущая директория (А)
+    #: Текущая директория (А)
     infloder: str
-    # Сравнительная директория (Б)
+    #: Сравнительная директория (Б)
     outfolder: str
-    # Файлы, которые не существую в директории (Б)
+    #: Файлы, которые не существую в директории (Б)
     not_exist_arr_file: set[str]
-    # Папки, которые не существуют в директории (Б)
+    #: Папки, которые не существуют в директории (Б)
     not_exist_arr_folder: set[str]
-    # Данные в (Б) отличаются от данных в (А)
+    #: Данные в (Б) отличаются от данных в (А)
     diff_data_arr_file: set[str]
-    # Файлы, которые нарушают исключение и существуют в (Б)
+    #: Файлы, которые нарушают исключение и существуют в (Б)
     file_intruder: set[str]
-    # Папки, которые нарушают исключение и существуют в (Б)
+    #: Папки, которые нарушают исключение и существуют в (Б)
     folder_intruder: set[str]
 
     # def log(self):
@@ -34,25 +35,35 @@ class DiffDir(NamedTuple):
     #     logger.info(f"FolderIntruder:\n{pformat(self.folder_intruder)}")
 
 
-class BaseFolder(metaclass=ABCMeta):
-    # Разделитель пути, будет актуальным для каждой ОС
-    OsSeparator: str = sep
+class TgetAllFileAndFolder(TypedDict):
+    """
+    Тип для :meth:`file.base_folder.BaseFolder.getAllFileAndFolder`
+    """
+    split_path: str  #: Начало которое нужно отделить от путей
+    arr_file: set[str]  #: Список файлов
+    arr_folder: set[str]  #: Список папок
 
-    def __init__(self, folder: str):
-        # Директория из которой нужно получить файлы и папки
+
+class BaseFolder:
+    """
+    Базовый класс для работы с директориями
+    """
+
+    def __init__(self, folder: str, arr_exclude: Optional[set[str]] = None):
+        """
+        :param folder: Директория из которой нужно получить файлы и папки
+        :param arr_exclude: Пути которые нужно исключить
+        """
         self.folder: str = folder
+        self.arr_exclude: set[str] = arr_exclude if arr_exclude else set()
 
-    def getAllFileAndFolder(self) -> dict[str, Union[set[str], str]]:
+    def getAllFileAndFolder(self) -> TgetAllFileAndFolder:
         """
         Получить список всех файлов и папок по указному пути.
-
-        @return: Список файлов и список папок
         """
 
-        # Список со всеми файлами
-        arr_file: set[str] = set()
-        # Список со всеми папками
-        arr_folder: set[str] = set()
+        arr_file: set[str] = set()  #: Список со всеми файлами
+        arr_folder: set[str] = set()  #: Список со всеми папками
         ###################################
         # Изначальный путь к папке
         _path: str = self.folder
@@ -84,54 +95,31 @@ class BaseFolder(metaclass=ABCMeta):
             if len(_arr_select_folder) == 0:
                 _Live = False
 
-        return {
-            "split_path": self.folder,
-            "arr_file": arr_file,
-            "arr_folder": arr_folder,
-        }
+        return TgetAllFileAndFolder(
+            split_path=self.folder,
+            arr_file=arr_file,
+            arr_folder=arr_folder
+        )
 
-    @classmethod
-    def sortPath(cls, arr_path: Union[list[str], set[str]], reverse: bool = True) -> list[str]:
-        """
-        Отсортировать пути.
-        Для создания и удаления папок необходимо соблюдать порядок путей.
-
-        @param arr_path: Список путей
-        @param reverse: Сортировать в обратном порядке.
-         Сначала длинный путь, который будет указывать на файл, в конце, короткий путь,
-         который будет указывать на папку. Когда мы будем удалять файлы и папки то нам
-         нужно отсортировать пути в обратном порядке. Когда нам нужно создать файлы и папки то
-         нам нужен обычный порядок.
-        @return: Отсортированные пути
-        """
-        # Создаем список с количеством разделителей директорий
-        _res: list[tuple[int, str]] = [(len(_x.split(cls.OsSeparator)), _x) for _x in list(arr_path)]
-        # Сортируем директории по количеству разделителей, в обратном порядке
-        _res.sort(key=lambda k: k[0], reverse=reverse)
-        # Преобразуем данные
-        _res: list[str] = [_x[1] for _x in _res]
-        return _res
-
-    @staticmethod
-    def excludeFolderAndFile(arr_exclude: set[str], *,
+    def excludeFolderAndFile(self,
                              arr_file: set[str],
-                             arr_folder: set[str], **kwargs) -> tuple[set[str], set[str]]:
+                             arr_folder: set[str], **kwargs) \
+            -> tuple[set[str], set[str]]:
         """
         Метод для исключения фалов и папок из списков.
 
-        @param arr_exclude: Список исключений
-        @param arr_file: Список файлов
-        @param arr_folder: Список папок
-        @return: Новый список файлов и папок, с исключенными путями
+        :param arr_file: Список файлов
+        :param arr_folder: Список папок
+        :return: Новый список файлов и папок, с исключенными путями
         """
 
         # Если нечего исключать, то возвращаем исходные данные
-        if not arr_exclude:
+        if not self.arr_exclude:
             return arr_file, arr_folder
 
         def isExclude(_path: str) -> bool:
             # Проверяем путь на вхождение в список исключений
-            for _re in arr_exclude:
+            for _re in self.arr_exclude:
                 # Проверяем начло не соответствие шаблону исключения
                 isExist = match(fr"{_re}[\W\w]*", _path.__str__())
                 if isExist:
@@ -149,8 +137,33 @@ class BaseFolder(metaclass=ABCMeta):
 
         return logic(arr_file), logic(arr_folder)
 
+    @staticmethod
+    def sortPath(arr_path: Union[list[str], set[str]], reverse: bool = True) -> list[str]:
+        """
+        Отсортировать пути.
+        Для создания и удаления папок необходимо соблюдать порядок путей.
+
+        :param arr_path: Список путей
+        :param reverse: Сортировать в обратном порядке.
+         Сначала длинный путь, который будет указывать на файл, в конце, короткий путь,
+         который будет указывать на папку. Когда мы будем удалять файлы и папки то нам
+         нужно отсортировать пути в обратном порядке. Когда нам нужно создать файлы и папки то
+         нам нужен обычный порядок.
+        """
+        # Создаем список с количеством разделителей директорий
+        _res: list[tuple[int, str]] = [(len(_x.split(sep)), _x) for _x in list(arr_path)]
+        # Сортируем директории по количеству разделителей, в обратном порядке
+        _res.sort(key=lambda k: k[0], reverse=reverse)
+        # Преобразуем данные
+        _res: list[str] = [_x[1] for _x in _res]
+        return _res
+
 
 class Folder(BaseFolder):
+    """
+    Работа с директориями
+    """
+
     @staticmethod
     def _dirDiff(
             in_folder: str,
@@ -165,7 +178,15 @@ class Folder(BaseFolder):
         - Файл имеют разные хеш суммы
         - Файл или папка которая находиться в исключение, но существует в Б
 
-        @return: Список директорий и файлов который нужно скопировать
+        :param in_folder: Текущая директория (А)
+        :param arr_file_in: Список файлов в текущей директории
+        :param arr_folder_in: Список папок в текущей директории
+
+        :param outfolder: Сравнительная директория (Б)
+        :param arr_file_out: Список файлов в текущей сравнительной директории
+        :param arr_folder_out: Список папок в текущей сравнительной директории
+
+        :return: Список директорий и файлов который нужно скопировать
         """
 
         def FolderIfNotExist() -> set[str]:
@@ -225,18 +246,20 @@ class Folder(BaseFolder):
                        folder_intruder)
         return _res
 
-    def getDiff(self, arr_exclude_self, folder_two: BaseFolder, arr_exclude_two: set[str]) -> DiffDir:
+    def getDiff(self, folder_two: BaseFolder) -> DiffDir:
         """
         Получить различия между дирекцией А и Б
 
         А - директория откуда брать данные
         Б - директория куда копировать данные
+
+        :param folder_two: директория с которой нужно сравнить
         """
         # Получаем пути к файлам и папкам из директории А
-        arr_file_in, arr_folder_in = self.excludeFolderAndFile(arr_exclude_self,
+        arr_file_in, arr_folder_in = self.excludeFolderAndFile(self.arr_exclude,
                                                                **self.getAllFileAndFolder())
         # Получаем пути к файлам и папкам из директории Б
-        arr_file_out, arr_folder_out = folder_two.excludeFolderAndFile(arr_exclude_two,
+        arr_file_out, arr_folder_out = folder_two.excludeFolderAndFile(folder_two.arr_exclude,
                                                                        **folder_two.getAllFileAndFolder())
 
         # logger.debug(
@@ -247,10 +270,9 @@ class Folder(BaseFolder):
         #          'arr_folder_out': arr_folder_out}, compact=True)))
 
         # Получим разницу между А и Б директориями
-        objDiffDir = self._dirDiff(
+        return self._dirDiff(
             self.folder,
             arr_file_in, arr_folder_in,
             folder_two.folder,
             arr_file_out, arr_folder_out,
         )
-        return objDiffDir

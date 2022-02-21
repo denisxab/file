@@ -1,11 +1,15 @@
-# Описание функционала библиотеки
+
 
 ## TxtFile
+
+Работа с текстовым файлом.
 
 Сначала создаем экземпляр класса `TxtFile` а потом работаем с его методами
 
 ```python
-txt_obj = TxtFile("test.txt")
+from  mg_file.file.txt_file import TxtFile
+
+txt_obj = TxtFile('./path/file.txt')
 ```
 
 ---
@@ -44,7 +48,7 @@ assert txt_obj.readFile() == "123123\n3123133\n"
 ```python
 test_text = "Optional. If the number of \n bytes returned exceed the hint number, \n no more lines will be returned. Default value is  -1, which means all lines will be returned."
 txt_obj.writeFile(test_text)
-assert txt_obj.searchFile("more") == True
+assert txt_obj.search("more") == True
 ```
 
 ---
@@ -92,6 +96,10 @@ csv_obj = CsvFile("test.csv")
 > Пример
 
 ```python
+from mg_file.file.csv_file import CsvFile
+
+csv_obj = CsvFile("./path/file.csv")
+
 csv_obj.writeFile(
     [[1, 23, 41, 5],
      [21, 233, 46, 35],
@@ -113,8 +121,17 @@ assert csv_obj.readFile() == [['Данные', 'Data', 'Числа', 'Num'],
 > Пример
 
 ```python
-data_file = [['1', '2'], ['3', '2'], ["today", "Saturday"]]
-new_data = [['1', '2'], ['3', '2'], ["today", "Monday"]]
+from mg_file.file.csv_file import CsvFile
+csv_obj = CsvFile("./path/file.csv")
+
+data_file = [['1', '2'],
+             ['3', '2'],
+             ["today", "Saturday"]]
+
+new_data = [['1', '2'],
+            ['3', '2'], 
+            ["today", "Monday"]]
+
 DifferenceList = []
 csv_obj.writeFile(data_file, header=("h1", "h2"))
 csv_obj.readFileAndFindDifferences(new_data, DifferenceList.append)

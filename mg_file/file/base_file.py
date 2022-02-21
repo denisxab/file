@@ -1,15 +1,10 @@
-import importlib.util
 from abc import abstractmethod
-from hashlib import sha256
-from importlib.machinery import ModuleSpec
 from os import makedirs, remove, mkdir
 from os.path import abspath, dirname, exists, getsize, splitext
-from pathlib import Path
 from shutil import rmtree
-from types import ModuleType
-from typing import Any, Callable, TypeAlias, Union, Optional
+from typing import Any, Callable, TypeAlias, Union
 
-T_ConcatData: TypeAlias = Union[list[Union[str, int, float]], list[list[Union[str, int, float]]], dict, set, str]
+from file.helpful import sha256sum
 
 
 class BaseFile:
@@ -18,9 +13,13 @@ class BaseFile:
     """
     __slots__ = "name_file"
 
-    def __init__(self, name_file: str, type_file: str, mod: str = None):
+    def __init__(self, name_file: str, type_file: str):
+        """
+        :param type_file: Какое расширение должен иметь файл
+        :param name_file: Путь к файлу
+        """
         self.check_extensions_file(name_file, type_file)
-        self.name_file: str = name_file
+        self.name_file: str = name_file  #: Путь к файлу
         self.createFileIfDoesntExist()
 
     @staticmethod
@@ -28,9 +27,12 @@ class BaseFile:
         """
         Проверить расширение файла
 
-        @param name_file: Путь к файлу
-        @param req_type: Требуемое расширение
+        :param name_file: Путь к файлу
+        :param req_type: Требуемое расширение
         """
+        # Если не нужно проверять имя расширения
+        if not req_type:
+            return
         if splitext(name_file)[1] != req_type:  # Проверяем расширение файла
             raise ValueError(f"Файл должен иметь расширение {req_type}")
 
@@ -100,27 +102,40 @@ class BaseFile:
 
     @abstractmethod
     def readFile(self, *arg) -> Any:
+        """
+        Прочитать файл
+        """
         ...
 
     @abstractmethod
     def writeFile(self, arg: Any):
+        """
+       Записать данные в файл
+       """
         ...
 
     @abstractmethod
     def appendFile(self, arg: Any):
+        """
+        Добавить данные в файл
+        """
         ...
 
 
-def ConcatData(callback: Callable, file_data: T_ConcatData, new_data: T_ConcatData):
+T_ConcatData: TypeAlias = Union[list[Union[str, int, float]], list[list[Union[str, int, float]]], dict, set, str]
+
+
+def concat_data(callback: Callable, file_data: T_ConcatData, new_data: T_ConcatData):
     """
     Объединить два переменных, если они одинакового типа
 
-    @param new_data: Текущие данные в `Python`
-    @param file_data: Данные из файле
-    @param callback: Вызовется при успешной проверки типов
+    :param callback: Вызовется при успешной проверки типов
+    :param file_data: Данные из файле
+    :param new_data: Текущие данные в `Python`
     """
 
-    if type(new_data) == type(new_data):
+    # Входные данные должны быть такого же типа, что и в файле
+    if type(file_data) == type(new_data):
         match new_data:
             case list():
                 file_data.extend(new_data)
@@ -133,57 +148,3 @@ def ConcatData(callback: Callable, file_data: T_ConcatData, new_data: T_ConcatDa
         callback(file_data)
     else:
         raise TypeError("Тип данных в файле и тип входных данных различны")
-
-
-def sha256sum(path_file: str):
-    """
-    Получить хеш сумму файла
-    @param path_file: Путь к файлу
-    """
-    h = sha256()
-    b = bytearray(128 * 1024)
-    mv = memoryview(b)
-    with open(path_file, 'rb', buffering=0) as f:
-        for n in iter(lambda: f.readinto(mv), 0):
-            h.update(mv[:n])
-    return h.hexdigest()
-
-
-def read_file_by_module(infile: str) -> ModuleType:
-    """
-    Импортировать файл как модуль `python`
-
-    @param infile: Путь к `python` файлу
-    @return: Модуль `python`
-    """
-    # указать модуль, который должен быть импортируется относительно пути модуль
-    spec: Optional[ModuleSpec] = importlib.util.spec_from_file_location("my_module", infile)
-    # создает новый модуль на основе спецификации
-    __module: ModuleType = importlib.util.module_from_spec(spec)
-    # выполняет модуль в своем собственном пространстве имен,
-    # когда модуль импортируется или перезагружается.
-    spec.loader.exec_module(__module)
-    return __module
-
-
-def concat_absolute_dir_path(_file: str, _path: str) -> str:
-    """
-    Получить абсолютный путь папки и объединить с другим путем
-
-    :param _file:
-    :param _path:
-    :return:
-    """
-    return str(Path(_file).resolve().parent / _path)
-
-
-def absolute_path_dir(_file: str, back: int = 1) -> Path:
-    """
-    Получить абсолютный путь к своей директории
-
-    :param _file:
-    """
-    res = Path(_file).resolve()
-    for _ in range(back):
-        res = res.parent
-    return res

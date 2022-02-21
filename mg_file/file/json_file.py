@@ -1,7 +1,9 @@
+__all__ = ["JsonFile"]
+
 from json import load, dump, JSONDecodeError
 from typing import Any, Union
 
-from .base_file import BaseFile, ConcatData
+from .base_file import BaseFile, concat_data
 
 
 class JsonFile(BaseFile):
@@ -35,7 +37,7 @@ class JsonFile(BaseFile):
             dump(data, _jsonFile, skipkeys=skipkeys, sort_keys=sort_keys, indent=indent, ensure_ascii=ensure_ascii)
 
     def appendFile(self, data: Union[list, dict[str, Any]], *, ensure_ascii: bool = False):
-        ConcatData(
+        concat_data(
             lambda _data: self.writeFile(_data, ensure_ascii=ensure_ascii),
             self.readFile(),
             data)

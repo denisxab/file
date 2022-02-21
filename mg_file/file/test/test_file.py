@@ -8,8 +8,8 @@ class TestFile(unittest.TestCase):
 
     def __init__(self, methodName: str = ...) -> None:
         super().__init__(methodName)
-        # Имя фалйа
-        self.name_file = "test.txt"
+        # Имя файла
+        self.name_file = "./test.txt"
         # Данные для теста
         self.test_str: str = "ninja cjj,output На двух языках 1#1^23 !23№эЭ123'"
 
@@ -62,14 +62,15 @@ class TestFile(unittest.TestCase):
         self.assertEqual(self.testClassFile.readFile(2), "123123\n3123133\n")
 
     def test_readFileToResDict(self):
-        self.testClassFile.writeFile("my name\nmy passwd\nmy token")
-        res = self.testClassFile.readFileToResDict("name", "passwd", "token")
-        self.assertEqual(res, {'name': 'my name', 'passwd': 'my passwd', 'token': 'my token'})
+        self.testClassFile.writeFile("denisxab\ndenis-k@mail.com\npassword123")
+        res = self.testClassFile.readFileToResDict("user_name","email","password")
+        self.assertEqual(res, {'user_name': 'denisxab', 'email': 'denis-k@mail.com', 'password': 'password123'})
 
+    # Nujabes ft. MINMI - Shiki No Uta (Levox Remix)
     def test_searchFile(self):
         test_text = "Optional. If the number of \n bytes returned exceed the hint number, \n no more lines will be returned. Default value is  -1, which means all lines will be returned."
         self.testClassFile.writeFile(test_text)
-        self.assertEqual(self.testClassFile.searchFile("more"), True)
+        self.assertEqual(self.testClassFile.search("more"), True)
 
     def test___init__QuackCommand(self):
         TxtFile("test.txt", mod="w", data="123123")

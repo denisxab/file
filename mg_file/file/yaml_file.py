@@ -1,22 +1,20 @@
-from os.path import splitext
+__all__ = ["YamlFile"]
+
 from typing import Any, Union, Iterator
 
 from yaml import load, Loader, dump, load_all
 from yaml.composer import ComposerError
 
-from .base_file import BaseFile
+from .base_file import BaseFile, concat_data
 
 
 class YamlFile(BaseFile):
-    def appendFile(self, arg: Any):
-        # TODO: appendFile !!!
-        pass
+    """
+    Класс для работы с ``Yaml`` файлами
+    """
 
-    def __init__(self, name_file: str):
-        if splitext(name_file)[1] != ".yaml":  # Проверяем расширение файла
-            raise ValueError("Файл должен иметь расширение .yaml")
-
-        BaseFile.__init__(self, name_file)
+    def __init__(self, name_file: str, type_file: str = ".yaml"):
+        super().__init__(name_file, type_file=type_file)
 
     def readFile(self,
                  *,
@@ -25,10 +23,10 @@ class YamlFile(BaseFile):
                  limit: int = 0
                  ) -> Union[list, dict, Any]:
         """
-        @param _Loader: Разрешение чтение данных, которые хранятся в касторном типе. :param encoding: Кодировка.
-        @param limit: Если в файле есть документ, то можно указать сколько документов нужно прочитать. -1 пропитать
-        все документы из файла
-        @param encoding:
+        :param encoding: Кодировка
+        :param _Loader: Разрешение чтение данных, которые хранятся в касторном типе.
+        :param limit: Если в файле есть документ, то можно указать сколько документов нужно прочитать. -1 пропитать
+            все документы из файла
         """
 
         def __read_all(__yamlFile):
@@ -66,11 +64,24 @@ class YamlFile(BaseFile):
                   allow_unicode=True,
                   ):
         """
-        @param data:
-        @param encoding: Кодировка
-        @param default_flow_style: 	Если вы хотите, чтобы коллекции всегда сериализовались
-        в блочном стиле установите False
-        @param allow_unicode:Экранировать символы, если True данные запишутся как есть.
+        :param data:
+        :param encoding: Кодировка
+        :param default_flow_style: 	Если вы хотите, чтобы коллекции всегда сериализовались
+            в блочном стиле установите False
+        :param allow_unicode:Экранировать символы, если True данные запишутся как есть.
         """
         with open(self.name_file, "w", encoding=encoding) as _yamlFile:
             dump(data, _yamlFile, default_flow_style=default_flow_style, allow_unicode=allow_unicode)
+
+    def appendFile(self, data: Union[list, dict, Any], *,
+                   encoding: str = "utf-8",
+                   default_flow_style: bool = False,
+                   allow_unicode=True, ):
+        """Добавить данные в файл"""
+        concat_data(
+            lambda _data: self.writeFile(_data,
+                                         default_flow_style=default_flow_style,
+                                         encoding=encoding,
+                                         allow_unicode=allow_unicode),
+            self.readFile(),
+            data)
