@@ -8,5 +8,5 @@
 pip install mg-file
 ```
 
-[Документация](https://mg-file.readthedocs.io/en/latest/)
+[Документация](https://mg-file.readthedocs.io/ru/latest/)
 
