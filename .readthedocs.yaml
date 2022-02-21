@@ -1,4 +1,3 @@
-
 # .readthedocs.yaml
 # Read the Docs configuration file
 # See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
@@ -17,7 +16,7 @@ build:
     # golang: "1.17"
 
 sphinx:
-   configuration: mg_file/docs/source/conf.py
+  configuration: mg_file/docs/source/conf.py
 
 # If using Sphinx, optionally build your docs in additional formats such as PDF
 # formats:
@@ -25,7 +24,7 @@ sphinx:
 
 # Optionally declare the Python requirements required to build your docs
 python:
-   install:
-   - requirements: mg_file/docs/requirements.txt
+  install:
+    - requirements: mg_file/docs/requirements.txt
 
 
