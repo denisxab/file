@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mg_file"
-version = "0.1.10.3"
+version = "0.1.11"
 description = "Удобное пользование файлами"
 authors = ["Denis Vetkin <denis-kustov@rambler.ru>"]
 license = "BSD"
@@ -12,7 +12,9 @@ exclude = [
     "mg_file/.idea",
     "mg_file/venv",
     "mg_file/.git",
-    "mg_file/.gitignore"
+    "mg_file/.gitignore",
+    "mg_file/docs",
+    "mg_file/Makefile"
 ]
 
 [tool.poetry.dependencies]
