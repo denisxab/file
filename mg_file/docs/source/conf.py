@@ -12,8 +12,21 @@
 
 import os
 import sys
+from pathlib import Path
 
-from file.helpful import absolute_path_dir
+
+def absolute_path_dir(_file: str, back: int = 1) -> Path:
+    """
+    Получить абсолютный путь к своей директории
+
+    :param _file: Путь
+    :param back: Сколько отступить назад
+    """
+    res = Path(_file).resolve()
+    for _ in range(back):
+        res = res.parent
+    return res
+
 
 sys.path.insert(0, os.path.abspath('.'))
 
