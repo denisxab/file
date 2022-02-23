@@ -65,4 +65,19 @@ Folder
     :undoc-members:
     :special-members: __init__
 
+ZippFile
+-------
+
+.. automodule:: file.zip_file
+    :members:
+    :undoc-members:
+    :special-members: __init__
+
+LogFile
+-------
+
+.. automodule:: file.log_file
+    :members:
+    :undoc-members:
+    :special-members: __init__
 
