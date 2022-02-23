@@ -14,12 +14,31 @@ def os_exe_thread(
         call_log_error: loglevel = lambda _x, flag: ...,
 ):
     """
-    Выполнить команды системы в нескольких потоках
+    Выполнить команды системы в нескольких потоках.
+
 
     :param label_command: Общее название команд
     :param command_list: Список команд
     :param call_log_info: Функция для логов информации
     :param call_log_error: Функция для логов ошибок
+
+    :Пример вызова:
+
+    ..code-bloc:: python
+
+        indir = os.path.dirname(__file__)
+        command_list: list[str] = []
+        command = "pull"
+
+        for _path in listdir():
+            command_list.append(f"cd {path.join(indir, _path)} && git {command}")
+
+        os_exe_thread(
+            "GIT PULL",
+            command_list,
+            call_log_info=logger.info,
+            call_log_error=logger.error
+        )
     """
 
     lock = Lock()

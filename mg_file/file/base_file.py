@@ -1,9 +1,11 @@
 from abc import abstractmethod
 from os import makedirs, remove, mkdir
 from os.path import abspath, dirname, exists, getsize, splitext
+from pickle import load, dump
 from shutil import rmtree
-from typing import Any, Callable, TypeAlias, Union
+from typing import Any, Callable, TypeAlias, Union, Optional
 
+from .base_crypto import CryptoAes, SecretDataAes
 from .helpful import sha256sum
 
 
@@ -94,11 +96,31 @@ class BaseFile:
         """
         rmtree(self.name_file.split('/')[1])
 
-    def HashFileSha256(self) -> str:
+    def hashFileSha256(self) -> str:
         """
         Получить хеш сумму файла
         """
         return sha256sum(self.name_file)
+
+    def encryptFile(self, key: str, outpath: Optional[str] = str):
+        """
+        Зашифровать файл
+
+        :param key: Ключ для шифрования, должен иметь длину 16,24,32 байта
+        :param outpath: Путь куда сохранить зашифрованный файл
+        """
+        res: SecretDataAes = CryptoAes(key).encodeAES(str(self.readFile()))
+        with open(outpath if outpath else self.name_file, "wb") as _pickFile:
+            dump(res, _pickFile, protocol=3)
+
+    def decryptoFile(self, key: str) -> Optional[str]:
+        """
+        Расшифровать файл
+
+        :param key: Ключ для шифрования, должен иметь длину 16,24,32 байта
+        """
+        with open(self.name_file, "rb") as _pickFile:
+            return CryptoAes(key).decodeAES(load(_pickFile))
 
     @abstractmethod
     def readFile(self, *arg) -> Any:

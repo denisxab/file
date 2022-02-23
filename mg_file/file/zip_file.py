@@ -31,13 +31,14 @@ class ZippFile(BaseFile):
         self.call_log_info: loglevel = call_log_info
         self.call_log_error: loglevel = call_log_error
 
-    def writeFile(self, in_path: str):
+    def writeFile(self, in_path: str, compression: ZipCompression = ZipCompression.ZIP_DEFLATED):
         """
         Записать файл в архив
 
         :param in_path: Путь к файлу
+        :param compression:
         """
-        with ZipFile(self.name_file, 'w') as zip_file:
+        with ZipFile(self.name_file, 'w', compression=compression.value) as zip_file:
             if path.isfile(in_path):
                 zip_file.write(in_path)
 
