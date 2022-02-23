@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mg_file"
-version = "0.1.11"
+version = "0.1.13"
 description = "Удобное пользование файлами"
 authors = ["Denis Vetkin <denis-kustov@rambler.ru>"]
 license = "BSD"
@@ -24,6 +24,7 @@ prettytable = "^3.0.0"
 PyYAML = "^6.0"
 loguru = "^0.6.0"
 typing-extensions = "^4.1.1"
+tqdm = "^4.62.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"

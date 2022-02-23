@@ -4,7 +4,7 @@ from os.path import abspath, dirname, exists, getsize, splitext
 from shutil import rmtree
 from typing import Any, Callable, TypeAlias, Union
 
-from file.helpful import sha256sum
+from .helpful import sha256sum
 
 
 class BaseFile:
