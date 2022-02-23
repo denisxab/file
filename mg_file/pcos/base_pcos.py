@@ -42,9 +42,10 @@ def os_exe_thread(
             with lock:
                 call_log_error(f"{_command}:{e.output.decode('utf-8')}", flag=str(e.returncode))
 
-        with lock:
-            pbar.update()
-            pbar.set_description(f"{_command}")
+        finally:
+            with lock:
+                pbar.update()
+                pbar.set_description(f"{_command}")
 
     list_thread: list[Thread] = []
     with tqdm(total=len(command_list)) as pbar:
