@@ -1,19 +1,20 @@
 from subprocess import check_output, CalledProcessError, STDOUT
 from threading import Lock, Thread
-from typing import Callable
 
-# poetry add tqdm
-from tqdm import tqdm
+from logsaml import loglevel
 
-
-# from ..logsmal import loglevel
+try:
+    # poetry add tqdm
+    from tqdm import tqdm
+except ImportError:
+    ...
 
 
 def os_exe_thread(
         label_command: str,
         command_list: list[str],
-        call_log_info: Callable[[str, str], None] = lambda _x, flag: ...,
-        call_log_error: Callable[[str, str], None] = lambda _x, flag: ...,
+        call_log_info: loglevel = lambda _x, flag: ...,
+        call_log_error: loglevel = lambda _x, flag: ...,
 ):
     """
     Выполнить команды системы в нескольких потоках.

@@ -4,4 +4,4 @@ auto_doc:
 
 # Создать файл зависимостей для Read The Docs
 req:
-	poetry export -f requirements.txt --output ./mg_file/docs/requirements.txt --dev --without-hashes;
+	poetry export -f requirements.txt --output ./docs/requirements.txt --dev --without-hashes;

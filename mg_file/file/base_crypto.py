@@ -2,8 +2,11 @@ from pprint import pformat
 from secrets import token_hex
 from typing import NamedTuple
 
-# poetry add pycryptodomex
-from Cryptodome.Cipher import AES
+try:
+    # poetry add pycryptodomex
+    from Cryptodome.Cipher import AES
+except ImportError:
+    ...
 
 
 class SecretDataAes(NamedTuple):

@@ -20,12 +20,11 @@ exclude = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
-prettytable = "^3.0.0"
-PyYAML = "^6.0"
-loguru = "^0.6.0"
+#prettytable = "^3.0.0"
+#PyYAML = "^6.0"
 typing-extensions = "^4.1.1"
-tqdm = "^4.62.3"
-pycryptodomex = "^3.14.1"
+#tqdm = "^4.62.3"
+#pycryptodomex = "^3.14.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"

@@ -4,8 +4,11 @@ from csv import reader, writer
 from os import SEEK_END, SEEK_SET
 from typing import Union, List, Callable, Optional
 
-# pip install prettytable
-from prettytable import PrettyTable
+try:
+    # pip install prettytable
+    from prettytable import PrettyTable
+except ImportError:
+    ...
 
 from .base_file import BaseFile, concat_data
 

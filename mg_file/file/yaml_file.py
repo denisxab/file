@@ -2,8 +2,11 @@ __all__ = ["YamlFile"]
 
 from typing import Any, Union, Iterator, Optional
 
-from yaml import load, Loader, dump, load_all
-from yaml.composer import ComposerError
+try:
+    from yaml import load, Loader, dump, load_all
+    from yaml.composer import ComposerError
+except ImportError:
+    ...
 
 from .base_file import BaseFile, concat_data
 

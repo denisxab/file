@@ -4,7 +4,7 @@ from collections import deque
 from pprint import pformat
 from typing import Any, Coroutine, Callable
 
-from loguru import logger
+# from loguru import logger
 
 from .async_serializer import BaseTasks
 from ..base_sql import BaseSql
@@ -47,7 +47,7 @@ class AsyncBaseSql(BaseSql, BaseTasks, metaclass=ABCMeta):
             async with self.ConnectCallback(**self.SETTINGS_DB) as connection:
                 return await fun(connection, *args, **kwargs)
         except self.ERROR as e:
-            logger.error(e)
+            # logger.error(e)
             raise e
 
     # POOL
@@ -73,7 +73,7 @@ class AsyncBaseSql(BaseSql, BaseTasks, metaclass=ABCMeta):
             async with self.Poll.acquire() as connection:
                 return await fun(connection, *args, **kwargs)
         except self.ERROR as e:
-            logger.error(e)
+            # logger.error(e)
             raise e
 
     # Abstract
