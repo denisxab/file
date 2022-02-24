@@ -44,7 +44,7 @@ class BaseFile:
         """
         if not exists(self.name_file):
             tmp_ = dirname(self.name_file)
-            if not exists(tmp_):  # Если задан путь из папок если их нет
+            if tmp_ and not exists(tmp_):  # Если задан путь из папок если их нет
                 makedirs(tmp_)  # Создаем путь из папок
                 open(self.name_file, "w").close()
             else:

@@ -48,23 +48,18 @@ def os_exe_thread(
 
         :param _command:
         """
+
         try:
-            res = check_output(
-                _command,
-                shell=True,
-                stderr=STDOUT,
-            )
+            res = check_output(_command, shell=True, stderr=STDOUT)
             with lock:
                 call_log_info(f"{_command}:{res.decode('utf-8')}", flag=label_command)
-
         except CalledProcessError as e:
             with lock:
                 call_log_error(f"{_command}:{e.output.decode('utf-8')}", flag=str(e.returncode))
-
         finally:
             with lock:
-                pbar.update()
                 pbar.set_description(f"{_command}")
+                pbar.update()
 
     list_thread: list[Thread] = []
     with tqdm(total=len(command_list)) as pbar:

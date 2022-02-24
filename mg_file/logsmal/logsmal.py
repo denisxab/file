@@ -1,6 +1,7 @@
 from enum import Enum
 from typing import Optional, Final, Any, Callable, Union
 
+from ..file.helpful import toBitSize
 from ..file.log_file import LogFile
 
 
@@ -25,7 +26,7 @@ class CompressionLog(Enum):
         from ..file.zip_file import ZippFile, ZipCompression
         ZippFile(f"{_path_file}.zip").writeFile(_path_file, compression=ZipCompression.ZIP_LZMA)
         LogFile(_path_file).deleteFile()
-        logger.system_info(_path_file, flag="DELETE")
+        logger.system_info(_path_file, flag="ZIP_AND_DELETE")
 
 
 class MetaLogger:
@@ -67,8 +68,8 @@ class loglevel:
             console_out: bool = True,
             color_flag: Optional[str] = None,
             color_loglevel: Optional[str] = None,
-            max_size_file: Optional[int] = None,
-            compression: Optional[Union[CompressionLog, Callable]] = None
+            max_size_file: Optional[Union[int, str]] = "10mb",
+            compression: Optional[Union[CompressionLog, Callable]] = None,
     ):
         """
         Создать логгер
@@ -76,8 +77,13 @@ class loglevel:
         :param level:
         :param fileout:
         :param console_out:
-        :param max_size_file: Максимальный размер(байтах)
-            файла после которого происходит ``compression``
+        :param max_size_file: Максимальный размер(байтах), файла после которого происходит ``compression``.
+
+            Также можно указать:
+            - kb - Например 10kb
+            - mb - Например 1mb
+            - None - Без ограничений
+
         :param compression: Что делать с файлам после достижение ``max_size_file``
         """
         self.level: str = level
@@ -85,7 +91,7 @@ class loglevel:
         self.console_out: bool = console_out
         self.color_flag: str = color_flag
         self.color_loglevel: str = color_loglevel
-        self.max_size_file: Optional[int] = max_size_file
+        self.max_size_file: Optional[int] = toBitSize(max_size_file) if max_size_file else None
         self.compression: Callable = compression if compression else CompressionLog.rewrite_file
 
         #: Сколько раз было записей в лог файл, до выполнения
