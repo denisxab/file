@@ -20,9 +20,9 @@ exclude = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
+typing-extensions = "^4.1.1"
 #prettytable = "^3.0.0"
 #PyYAML = "^6.0"
-typing-extensions = "^4.1.1"
 #tqdm = "^4.62.3"
 #pycryptodomex = "^3.14.1"
 

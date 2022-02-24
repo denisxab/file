@@ -1,7 +1,7 @@
 from subprocess import check_output, CalledProcessError, STDOUT
 from threading import Lock, Thread
 
-from logsaml import loglevel
+from logsmal import loglevel
 
 try:
     # poetry add tqdm

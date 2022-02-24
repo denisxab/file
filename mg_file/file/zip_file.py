@@ -3,7 +3,7 @@ from os import path, listdir
 from typing import Optional, Any
 from zipfile import ZIP_LZMA, ZipFile, ZIP_DEFLATED, ZIP_BZIP2, ZIP_STORED
 
-from logsaml import loglevel
+from logsmal import loglevel
 
 from .base_file import BaseFile
 
