@@ -2,7 +2,7 @@ from abc import abstractmethod
 from pprint import pformat
 from typing import Any, Callable
 
-# from loguru import logger
+from logsmal import logger
 
 from .sync_serializer import Efetch
 from ..base_sql import BaseSql
@@ -20,7 +20,7 @@ class SyncBaseSql(BaseSql):
         try:
             return fun(connection, *args, **kwargs)
         except self.ERROR as e:
-            # logger.error(e)
+            logger.error(e)
             raise e
         finally:
             connection.close()
