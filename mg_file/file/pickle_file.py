@@ -1,7 +1,7 @@
 __all__ = ["PickleFile"]
 
 from pickle import load, dump
-from typing import Any, Union
+from typing import Any, Union, Optional
 
 from .base_file import BaseFile, concat_data
 
@@ -16,7 +16,7 @@ class PickleFile(BaseFile):
 
     """
 
-    def __init__(self, name_file: str, type_file: str = ".pkl"):
+    def __init__(self, name_file: str, type_file: Optional[str] = ".pkl"):
         super().__init__(name_file, type_file=type_file)
 
     def writeFile(self, data: Any, *, protocol: int = 3):

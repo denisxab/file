@@ -9,5 +9,5 @@ class LogFile(TxtFile):
     """
 
     def __init__(self, name_file: str, *, mod: Optional[Literal['r', 'w', 'rb', 'wb', 'a', 'ab']] = None,
-                 encoding: str = None, data: Any = None, type_file: str = ".log"):
+                 encoding: str = None, data: Any = None, type_file: Optional[str] = ".log"):
         super().__init__(name_file, mod=mod, encoding=encoding, data=data, type_file=type_file)

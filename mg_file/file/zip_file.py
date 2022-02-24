@@ -1,10 +1,12 @@
 from enum import Enum
 from os import path, listdir
-from typing import Optional, Any
+from typing import Optional, Any, Callable
 from zipfile import ZIP_LZMA, ZipFile, ZIP_DEFLATED, ZIP_BZIP2, ZIP_STORED
 
 from .base_file import BaseFile
-from ..logsmal import loglevel
+
+
+# from ..logsmal import loglevel
 
 
 class ZipCompression(Enum):
@@ -23,13 +25,13 @@ class ZippFile(BaseFile):
     """
 
     def __init__(
-            self, name_file: str, type_file: str = ".zip",
-            call_log_info: loglevel = lambda _x, flag: ...,
-            call_log_error: loglevel = lambda _x, flag: ...,
+            self, name_file: str, type_file: Optional[str] = ".zip",
+            call_log_info: Callable[[str, str], None] = lambda _x, flag: ...,
+            call_log_error: Callable[[str, str], None] = lambda _x, flag: ...,
     ):
         super().__init__(name_file, type_file=type_file)
-        self.call_log_info: loglevel = call_log_info
-        self.call_log_error: loglevel = call_log_error
+        self.call_log_info: Callable[[str, str], None] = call_log_info
+        self.call_log_error: Callable[[str, str], None] = call_log_error
 
     def writeFile(self, in_path: str, compression: ZipCompression = ZipCompression.ZIP_DEFLATED):
         """

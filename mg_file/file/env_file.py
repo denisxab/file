@@ -3,6 +3,7 @@ __all__ = ["EnvFile"]
 from os import environ, getenv
 from pprint import pprint
 from re import sub
+from typing import Optional
 
 from .txt_file import TxtFile
 
@@ -12,7 +13,7 @@ class EnvFile(TxtFile):
     Работа с файлом переменных окружения
     """
 
-    def __init__(self, name_file: str, type_file: str = '.env'):
+    def __init__(self, name_file: str, type_file: Optional[str] = '.env'):
         """
 
         :param name_file: Путь к файлу

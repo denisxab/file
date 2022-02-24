@@ -1,6 +1,6 @@
 __all__ = ["YamlFile"]
 
-from typing import Any, Union, Iterator
+from typing import Any, Union, Iterator, Optional
 
 from yaml import load, Loader, dump, load_all
 from yaml.composer import ComposerError
@@ -13,7 +13,7 @@ class YamlFile(BaseFile):
     Класс для работы с ``Yaml`` файлами
     """
 
-    def __init__(self, name_file: str, type_file: str = ".yaml"):
+    def __init__(self, name_file: str, type_file: Optional[str] = ".yaml"):
         super().__init__(name_file, type_file=type_file)
 
     def readFile(self,

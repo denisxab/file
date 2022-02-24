@@ -21,7 +21,7 @@ class TxtFile(BaseFile):
                  mod: Optional[Literal['r', 'w', 'rb', 'wb', 'a', 'ab']] = None,
                  encoding: str = None,
                  data: Any = None,
-                 type_file: str = ".txt"):
+                 type_file: Optional[str] = ".txt"):
         """
         Вы можете сразу выполнить метод указав ``mod``
 

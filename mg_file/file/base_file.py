@@ -15,9 +15,10 @@ class BaseFile:
     """
     __slots__ = "name_file"
 
-    def __init__(self, name_file: str, type_file: str):
+    def __init__(self, name_file: str, type_file: Optional[str]):
         """
-        :param type_file: Какое расширение должен иметь файл
+        :param type_file: Какое расширение должен иметь файл. Если указать
+            None то это значит что проверка попуститься
         :param name_file: Путь к файлу
         """
         self.check_extensions_file(name_file, type_file)

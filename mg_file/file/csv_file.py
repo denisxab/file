@@ -2,7 +2,7 @@ __all__ = ["CsvFile"]
 
 from csv import reader, writer
 from os import SEEK_END, SEEK_SET
-from typing import Union, List, Callable
+from typing import Union, List, Callable, Optional
 
 # pip install prettytable
 from prettytable import PrettyTable
@@ -35,7 +35,7 @@ class CsvFile(BaseFile):
                                       ['12', '213', '43', '56']]
     """
 
-    def __init__(self, name_file: str, type_file: str = ".csv"):
+    def __init__(self, name_file: str, type_file: Optional[str] = ".csv"):
         super().__init__(name_file, type_file=type_file)
 
     def readFile(self,

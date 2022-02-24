@@ -1,7 +1,7 @@
 __all__ = ["JsonFile"]
 
 from json import load, dump, JSONDecodeError
-from typing import Any, Union
+from typing import Any, Union, Optional
 
 from .base_file import BaseFile, concat_data
 
@@ -11,7 +11,7 @@ class JsonFile(BaseFile):
     Работа с Json файлами
     """
 
-    def __init__(self, name_file: str, type_file: str = ".json"):
+    def __init__(self, name_file: str, type_file: Optional[str] = ".json"):
         super().__init__(name_file, type_file=type_file)
 
     def readFile(self, **kwargs) -> Union[list, dict, int, str, float, None, bool]:
