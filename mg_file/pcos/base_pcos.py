@@ -3,11 +3,8 @@ from threading import Lock, Thread
 
 from logsmal import loglevel
 
-try:
-    # poetry add tqdm
-    from tqdm import tqdm
-except ImportError:
-    ...
+# poetry add tqdm
+from tqdm import tqdm
 
 
 def os_exe_thread(

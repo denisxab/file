@@ -1,3 +1,5 @@
+from mg_crp.crypto_aes import CryptoAes
+
 from mg_file import TxtFile
 
 file_name = "./test.txt"
@@ -14,8 +16,8 @@ class Test_BaseFile:
     def test_encryptFile(self):  # Все методы должны начинаться со слова `test_`
         _f = TxtFile(file_name)
         _f.writeFile(data)
-        _f.encryptFile(secret_key, file_name_out)
-        res = TxtFile(file_name_out).decryptoFile(secret_key)
+        _f.encryptFile(secret_key, CryptoAes, outpath=file_name_out)
+        res = TxtFile(file_name_out).decryptoFile(secret_key, CryptoAes)
         assert res == data
         _f.deleteFile()
         TxtFile(file_name_out).deleteFile()

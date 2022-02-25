@@ -1,3 +1,4 @@
+import typing
 from abc import abstractmethod
 from os import makedirs, remove, mkdir
 from os.path import abspath, dirname, exists, getsize, splitext
@@ -5,7 +6,6 @@ from pickle import load, dump
 from shutil import rmtree
 from typing import Any, Callable, TypeAlias, Union, Optional
 
-from .base_crypto import CryptoAes, SecretDataAes
 from .helpful import sha256sum
 
 
@@ -103,22 +103,24 @@ class BaseFile:
         """
         return sha256sum(self.name_file)
 
-    def encryptFile(self, key: str, outpath: Optional[str] = str):
+    def encryptFile(self, key: str, CryptoAes: object, outpath: Optional[str] = str, ):
         """
         Зашифровать файл
 
         :param key: Ключ для шифрования, должен иметь длину 16,24,32 байта
         :param outpath: Путь куда сохранить зашифрованный файл
+        :param CryptoAes: https://github.com/denisxab/mg_crp.git
         """
-        res: SecretDataAes = CryptoAes(key).encodeAES(str(self.readFile()))
+        res: typing.NamedTuple = CryptoAes(key).encodeAES(str(self.readFile()))
         with open(outpath if outpath else self.name_file, "wb") as _pickFile:
             dump(res, _pickFile, protocol=3)
 
-    def decryptoFile(self, key: str) -> Optional[str]:
+    def decryptoFile(self, key: str, CryptoAes: object) -> Optional[str]:
         """
         Расшифровать файл
 
         :param key: Ключ для шифрования, должен иметь длину 16,24,32 байта
+        :param CryptoAes: https://github.com/denisxab/mg_crp.git
         """
         with open(self.name_file, "rb") as _pickFile:
             return CryptoAes(key).decodeAES(load(_pickFile))
