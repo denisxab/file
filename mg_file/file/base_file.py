@@ -1,12 +1,11 @@
 from abc import abstractmethod
-from hashlib import sha256
 from os import makedirs, remove, mkdir
 from os.path import abspath, dirname, exists, getsize, splitext
 from pickle import load, dump
 from shutil import rmtree
 from typing import Any, Callable, TypeAlias, Union, Optional, NamedTuple
 
-from .helpful import sha256sum, T_CryptoAes
+from .helpful import T_CryptoAes, BaseHash
 
 
 class BaseFile:
@@ -109,19 +108,7 @@ class BaseFile:
         """
         Получить хеш сумму файла
         """
-        return sha256sum(self.name_file)
-
-    @staticmethod
-    def check_hash_sum(text: str, true_hash_sum: str):
-        """
-        Проверить данные в тексте на подлинность переданной хеш суммы
-
-        :param text: Текст
-        :param true_hash_sum: Требуемая хеш сумма
-        """
-        if sha256(text.encode()).hexdigest() != true_hash_sum:
-            raise ValueError("Хеш суммы не равны")
-        return text
+        return BaseHash.file(self.name_file)
 
     @staticmethod
     def check_extensions_file(name_file: str, req_type: str):

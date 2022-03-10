@@ -5,7 +5,7 @@ from os import sep, listdir, path
 from re import match
 from typing import NamedTuple, Union, TypedDict, Optional
 
-from .base_file import sha256sum
+from .helpful import BaseHash
 
 
 class DiffDir(NamedTuple):
@@ -216,7 +216,7 @@ class Folder(BaseFolder):
                 else:
                     # Если хеш одинаковый, то не копируем файл
                     # Если хеш разный, то копируем файл
-                    if sha256sum(_in_path) != sha256sum(_out_path):
+                    if BaseHash.file(_in_path) != BaseHash.file(_out_path):
                         _diff_data_arr_file.add(_path)
 
             return _diff_data_arr_file, _not_exist_arr_file
