@@ -87,3 +87,18 @@ def toBitSize(size: Union[str, int]) -> int:
         case _:
             raise ValueError(f"Не верный тип {size}")
 
+
+class T_CryptoAes:
+    """
+    Источник кода
+
+    https://github.com/denisxab/mg_crp.git
+    """
+
+    def __init__(self, key: str): ...
+
+    def encodeAES(self): ...
+
+    def dencodeAES(self): ...
+
+    def __call__(self, *args, **kwargs): ...

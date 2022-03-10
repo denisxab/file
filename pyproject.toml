@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mg_file"
-version = "0.1.20"
+version = "0.1.22"
 description = "Удобное пользование файлами"
 authors = ["Denis Vetkin <denis-kustov@rambler.ru>"]
 license = "BSD"
@@ -21,7 +21,7 @@ exclude = [
 [tool.poetry.dependencies]
 python = "^3.10"
 typing-extensions = "^4.1.1"
-logsmal = "0.0.5"
+logsmal = "0.0.6"
 prettytable = "^3.0.0"
 PyYAML = "^6.0"
 tqdm = "^4.62.3"

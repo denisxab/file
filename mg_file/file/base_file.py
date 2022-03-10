@@ -1,12 +1,12 @@
-import typing
 from abc import abstractmethod
+from hashlib import sha256
 from os import makedirs, remove, mkdir
 from os.path import abspath, dirname, exists, getsize, splitext
 from pickle import load, dump
 from shutil import rmtree
-from typing import Any, Callable, TypeAlias, Union, Optional
+from typing import Any, Callable, TypeAlias, Union, Optional, NamedTuple
 
-from .helpful import sha256sum
+from .helpful import sha256sum, T_CryptoAes
 
 
 class BaseFile:
@@ -25,20 +25,6 @@ class BaseFile:
         self.name_file: str = name_file  #: Путь к файлу
         self.createFileIfDoesntExist()
 
-    @staticmethod
-    def check_extensions_file(name_file: str, req_type: str):
-        """
-        Проверить расширение файла
-
-        :param name_file: Путь к файлу
-        :param req_type: Требуемое расширение
-        """
-        # Если не нужно проверять имя расширения
-        if not req_type:
-            return
-        if splitext(name_file)[1] != req_type:  # Проверяем расширение файла
-            raise ValueError(f"Файл должен иметь расширение {req_type}")
-
     def createFileIfDoesntExist(self):
         """
         Создать файл если его нет
@@ -53,13 +39,13 @@ class BaseFile:
                 # или папки же существуют
                 open(self.name_file, "w").close()
 
-    def checkExistenceFile(self) -> bool:  # +
+    def checkExistenceFile(self) -> bool:
         """
         Проверить существование файла
         """
         return True if exists(self.name_file) else False
 
-    def deleteFile(self):  # +
+    def deleteFile(self):
         """
         Удалить файл
         """
@@ -67,7 +53,7 @@ class BaseFile:
         if self.checkExistenceFile():
             remove(self.route())
 
-    def sizeFile(self) -> int:  # +
+    def sizeFile(self) -> int:
         """
         Получить размер файла
         """
@@ -97,13 +83,7 @@ class BaseFile:
         """
         rmtree(self.name_file.split('/')[1])
 
-    def hashFileSha256(self) -> str:
-        """
-        Получить хеш сумму файла
-        """
-        return sha256sum(self.name_file)
-
-    def encryptFile(self, key: str, CryptoAes: object, outpath: Optional[str] = str, ):
+    def encryptFile(self, key: str, CryptoAes: T_CryptoAes, outpath: Optional[str] = str, ):
         """
         Зашифровать файл
 
@@ -111,11 +91,11 @@ class BaseFile:
         :param outpath: Путь куда сохранить зашифрованный файл
         :param CryptoAes: https://github.com/denisxab/mg_crp.git
         """
-        res: typing.NamedTuple = CryptoAes(key).encodeAES(str(self.readFile()))
+        res: NamedTuple = CryptoAes(key).encodeAES(str(self.readFile()))
         with open(outpath if outpath else self.name_file, "wb") as _pickFile:
             dump(res, _pickFile, protocol=3)
 
-    def decryptoFile(self, key: str, CryptoAes: object) -> Optional[str]:
+    def decryptoFile(self, key: str, CryptoAes: T_CryptoAes) -> Optional[str]:
         """
         Расшифровать файл
 
@@ -124,6 +104,38 @@ class BaseFile:
         """
         with open(self.name_file, "rb") as _pickFile:
             return CryptoAes(key).decodeAES(load(_pickFile))
+
+    def hashFileSha256(self) -> str:
+        """
+        Получить хеш сумму файла
+        """
+        return sha256sum(self.name_file)
+
+    @staticmethod
+    def check_hash_sum(text: str, true_hash_sum: str):
+        """
+        Проверить данные в тексте на подлинность переданной хеш суммы
+
+        :param text: Текст
+        :param true_hash_sum: Требуемая хеш сумма
+        """
+        if sha256(text.encode()).hexdigest() != true_hash_sum:
+            raise ValueError("Хеш суммы не равны")
+        return text
+
+    @staticmethod
+    def check_extensions_file(name_file: str, req_type: str):
+        """
+        Сравнить расширение файла, с требуемым
+
+        :param name_file: Путь к файлу
+        :param req_type: Требуемое расширение
+        """
+        # Если не нужно проверять имя расширения
+        if not req_type:
+            return
+        if splitext(name_file)[1] != req_type:  # Проверяем расширение файла
+            raise ValueError(f"Файл должен иметь расширение {req_type}")
 
     @abstractmethod
     def readFile(self, *arg) -> Any:
