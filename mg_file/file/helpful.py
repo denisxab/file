@@ -2,11 +2,10 @@ import importlib.util
 import re
 from hashlib import sha256
 from importlib.machinery import ModuleSpec
+from os.path import splitext
 from pathlib import Path
 from types import ModuleType
 from typing import Optional, Union
-
-from mg_file import BaseFile
 
 
 class BaseHash:
@@ -53,7 +52,9 @@ def read_file_by_module(_path: str) -> ModuleType:
     :param _path: Путь к `python` файлу
     :return: Модуль `python`
     """
-    BaseFile.check_extensions_file(_path, ".py")
+    # Если не нужно проверять имя расширения
+    if splitext(_path)[1] != ".py":  # Проверяем расширение файла
+        raise ValueError(f"Файл должен иметь расширение .py")
     # указать модуль, который должен быть импортируется относительно пути модуль
     spec: Optional[ModuleSpec] = importlib.util.spec_from_file_location("my_module", _path)
     # создает новый модуль на основе спецификации
