@@ -6,6 +6,8 @@ from pathlib import Path
 from types import ModuleType
 from typing import Optional, Union
 
+from mg_file import BaseFile
+
 
 class BaseHash:
 
@@ -44,15 +46,16 @@ class BaseHash:
         return True
 
 
-def read_file_by_module(infile: str) -> ModuleType:
+def read_file_by_module(_path: str) -> ModuleType:
     """
     Импортировать файл как модуль `python`
 
-    :param infile: Путь к `python` файлу
+    :param _path: Путь к `python` файлу
     :return: Модуль `python`
     """
+    BaseFile.check_extensions_file(_path, ".py")
     # указать модуль, который должен быть импортируется относительно пути модуль
-    spec: Optional[ModuleSpec] = importlib.util.spec_from_file_location("my_module", infile)
+    spec: Optional[ModuleSpec] = importlib.util.spec_from_file_location("my_module", _path)
     # создает новый модуль на основе спецификации
     __module: ModuleType = importlib.util.module_from_spec(spec)
     # выполняет модуль в своем собственном пространстве имен,
