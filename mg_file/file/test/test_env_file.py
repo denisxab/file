@@ -1,6 +1,6 @@
 import os
 
-from file.env_file import EnvFile
+from mg_file.file.env_file import EnvFile
 
 
 def test_read():
