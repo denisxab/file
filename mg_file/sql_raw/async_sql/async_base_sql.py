@@ -27,9 +27,9 @@ class AsyncBaseSql(BaseSql, BaseTasks, metaclass=ABCMeta):
         self.FuncConnectDb: Callable | object | None = None
 
     # BASE CONNECT
-    def executeTasks(self):
+    async def executeTasks(self):
         """Запустить выполнения задач"""
-        res = run(self._run(self.tasks))
+        res = await self._run(self.tasks)
         self.tasks.clear()
         return res
 
@@ -121,9 +121,10 @@ class AsyncBaseCommand(AsyncBaseSql, metaclass=ABCMeta):
         """
         Чтение из БД
         """
-        return await self.FuncConnectDb(self.read_command,
-                                        execute=execute,
-                                        params=params)
+        res = await self.FuncConnectDb(self.read_command,
+                                       execute=execute,
+                                       params=params)
+        return res
 
     async def rsql_transaction(self, execute: str,
                                params: tuple | dict | list = ()) -> str:

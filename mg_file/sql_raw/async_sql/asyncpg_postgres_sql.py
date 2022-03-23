@@ -42,7 +42,7 @@ class Config(AsyncBaseCommand):
     async def mutable_command(self, _connection,
                               execute: str,
                               params: tuple | dict | list = (), ):
-        await _connection.execute(execute)
+        await _connection.execute(execute, *params)
 
     async def transaction_mutable_command(self, _connection,
                                           execute: str,
