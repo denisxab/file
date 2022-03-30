@@ -110,6 +110,16 @@ class BaseFile:
         """
         return BaseHash.file(self.name_file)
 
+    def writeIfDontEqHash(self, data: Any, *, hash_sha256: str):
+        """
+        Записать данные в файл если они различны по хеш сумме
+        """
+        if self.hashFileSha256() != hash_sha256:
+            self.writeFile(data)
+            return True
+        else:
+            return False
+
     @staticmethod
     def check_extensions_file(name_file: str, req_type: str):
         """
@@ -134,8 +144,8 @@ class BaseFile:
     @abstractmethod
     def writeFile(self, arg: Any):
         """
-       Записать данные в файл
-       """
+        Записать данные в файл
+        """
         ...
 
     @abstractmethod
