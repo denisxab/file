@@ -1,10 +1,51 @@
+from asyncio import create_subprocess_shell, run, subprocess, gather
 from subprocess import check_output, CalledProcessError, STDOUT
 from threading import Lock, Thread
 
 from logsmal import loglevel
-
 # poetry add tqdm
 from tqdm import tqdm
+
+
+def os_exe_async(command_list: list[str]):
+    """
+    Выполнить асинхронно команды OS
+
+    :param command_list: Список команд
+    :return:
+
+
+    :Пример:
+
+    .. code-bloc:: python
+
+        pprint(os_exe_async(['ls', 'ls /home/']))
+    """
+
+    async def __self(_command: str):
+        proc = await create_subprocess_shell(
+            cmd=_command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        stdout, stderr = await proc.communicate()
+
+        pbar.set_description(f"{_command}")
+        pbar.update()
+
+        return {
+            'stdout': stdout.decode(),
+            'stderr': stderr.decode(),
+            "cod": proc.returncode,
+            "cmd": _command,
+        }
+
+    async def __loop():
+        task = [__self(_cmd) for _cmd in command_list]
+        return await gather(*task)
+
+    with tqdm(total=len(command_list)) as pbar:
+        return run(__loop())
 
 
 def os_exe_thread(
