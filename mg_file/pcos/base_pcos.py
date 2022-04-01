@@ -1,3 +1,4 @@
+import asyncio
 from asyncio import create_subprocess_shell, run, subprocess, gather
 from subprocess import check_output, CalledProcessError, STDOUT
 from threading import Lock, Thread
