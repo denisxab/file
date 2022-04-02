@@ -1,7 +1,7 @@
 from typing import Any
 
 try:
-    from sqlalchemy import text
+    from sqlalchemy import text, insert
     from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, AsyncConnection
     from sqlalchemy.ext.declarative import declarative_base
     from sqlalchemy.orm import sessionmaker
@@ -102,10 +102,75 @@ class SQL:
             await conn.run_sync(cls.Base.metadata.create_all)
 
     @classmethod
-    async def delete_tabel(cls):
+    async def drop_tabel(cls):
         """Удалить все таблицы"""
         # AsyncConnection
         async with cls.engine.begin() as conn:
             conn: AsyncConnection
 
             await conn.run_sync(cls.Base.metadata.drop_all)
+
+
+class FeaturesSql:
+    """
+    Особенности SQL
+    """
+
+    """
+    Префикс для игнорирования исключений
+    при вставке значений, например игнорировать вставку
+    не уникального значения в столбце
+
+    :Пример:
+
+    sql_ = await _session.execute(
+    insert(
+            UsersVk, 
+            prefixes=[SqlLite.prefixes_ignore_insert]
+        ),
+        arr_user
+    )
+    """
+    prefixes_ignore_insert = ''
+
+
+class SqlLite(FeaturesSql):
+    prefixes_ignore_insert = 'OR IGNORE'
+
+
+class MySql(FeaturesSql):
+    prefixes_ignore_insert = 'IGNORE'
+
+
+class SqlScript:
+
+    @classmethod
+    async def set_row_skip_unique(
+            cls,
+            models,
+            params,
+            dbms: FeaturesSql,
+            _session: AsyncSession
+    ):
+        """
+        Вставить запись игнорирую уникальность
+        """
+        await _session.execute(insert(models, prefixes=[dbms.prefixes_ignore_insert]), params)
+        await _session.commit()
+
+    @classmethod
+    async def set_row_if_not_unique(cls, sql_get, sql_set, _session: AsyncSession):
+        """
+        Вставить запись если она не уникальная
+        """
+        # Проверяем наличие записи в БД
+        response = await _session.execute(sql_get)
+        sql_obj = response.first()[0]
+        if not sql_obj:
+            # Если записи нет, то добавляем ей в БД
+            _session.add(sql_set)
+            await _session.commit()
+            return sql_set
+        else:
+            # Если он есть, то возвращаем полученный объект
+            return sql_obj
