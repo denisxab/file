@@ -1,14 +1,28 @@
-import asyncio
+import typing
 from asyncio import create_subprocess_shell, run, subprocess, gather
 from subprocess import check_output, CalledProcessError, STDOUT
 from threading import Lock, Thread
 
-from logsmal import loglevel
+from logsmal import loglevel, logger
 # poetry add tqdm
 from tqdm import tqdm
 
 
-def os_exe_async(command_list: list[str]):
+class type_os_res(typing.NamedTuple):
+    stdout: str
+    stderr: str
+    cod: str
+    cmd: str
+
+    def __str__(self, logger_info: logger, logger_error: logger, flag:str):
+        # Если есть ошибка выполнения
+        if self.stderr:
+            logger_error(f"CMD:{self.cmd}\nTEXT:{self.stderr}\nCODE:{self.cod}", flag)
+        else:
+            logger_info(f"CMD:{self.cmd}\nTEXT:{self.stdout}", flag)
+
+
+def os_exe_async(command_list: list[str]) -> list[type_os_res]:
     """
     Выполнить асинхронно команды OS
 
@@ -24,22 +38,24 @@ def os_exe_async(command_list: list[str]):
     """
 
     async def __self(_command: str):
+        # Выполняем команду
         proc = await create_subprocess_shell(
             cmd=_command,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
-        stdout, stderr = await proc.communicate()
 
+        stdout, stderr = await proc.communicate()
+        # Обновляем текст в плейсхолжере
         pbar.set_description(f"{_command}")
         pbar.update()
 
-        return {
-            'stdout': stdout.decode(),
-            'stderr': stderr.decode(),
-            "cod": proc.returncode,
-            "cmd": _command,
-        }
+        return type_os_res(
+            stdout=stdout.decode(),
+            stderr=stderr.decode(),
+            cod=proc.returncode,
+            cmd=_command,
+        )
 
     async def __loop():
         task = [__self(_cmd) for _cmd in command_list]
