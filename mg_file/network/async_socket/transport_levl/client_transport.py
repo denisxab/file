@@ -5,7 +5,7 @@ from typing import Protocol
 
 from logsmal import logger
 
-from helpful import sendto, recv
+from .helpful import sendto, recv
 
 
 class CallableSendToServer(Protocol):

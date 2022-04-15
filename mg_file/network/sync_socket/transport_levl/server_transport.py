@@ -1,7 +1,7 @@
 import socket
 from typing import Final, Union
 
-from datalink_levl.helpful import recv, send
+from ..datalink_levl.helpful import recv, send
 
 
 class TcpServer:

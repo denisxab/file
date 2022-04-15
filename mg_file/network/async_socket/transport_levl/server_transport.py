@@ -5,7 +5,7 @@ from typing import Optional, Any, Coroutine, Callable, Protocol
 
 from logsmal import logger
 
-from helpful import recv, sendto
+from .helpful import recv, sendto
 
 
 class CallableBuildSendData(Protocol):

@@ -1,7 +1,7 @@
 import socket
 from typing import Final
 
-from datalink_levl.helpful import send
+from ..datalink_levl.helpful import send
 
 
 class TcpClient:
