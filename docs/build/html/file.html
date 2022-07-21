@@ -48,6 +48,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-file.yaml_file">YamlFile</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-file.env_file">EnvFile</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-file.base_folder">Folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#zippfile">ZippFile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-file.log_file">LogFile</a></li>
 </ul>
 </li>
 </ul>
@@ -82,7 +84,7 @@
 <span id="txtfile"></span><h2>TxtFile<a class="headerlink" href="#module-file.txt_file" title="Ссылка на этот заголовок"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="file.txt_file.TxtFile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.txt_file.</span></span><span class="sig-name descname"><span class="pre">TxtFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mod</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'r'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'w'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'rb'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wb'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'a'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ab'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.txt'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.txt_file.TxtFile" title="Ссылка на это определение"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.txt_file.</span></span><span class="sig-name descname"><span class="pre">TxtFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mod</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'r'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'w'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'rb'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wb'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'a'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ab'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.txt'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.txt_file.TxtFile" title="Ссылка на это определение"></a></dt>
 <dd><p>Работа с текстовым файлом</p>
 <dl class="field-list simple">
 <dt class="field-odd">Example</dt>
@@ -93,14 +95,8 @@
 </pre></div>
 </div>
 <dl class="py method">
-<dt class="sig sig-object py" id="file.txt_file.TxtFile.HashFileSha256">
-<span class="sig-name descname"><span class="pre">HashFileSha256</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#file.txt_file.TxtFile.HashFileSha256" title="Ссылка на это определение"></a></dt>
-<dd><p>Получить хеш сумму файла</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="file.txt_file.TxtFile.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mod</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'r'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'w'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'rb'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wb'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'a'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ab'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.txt'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.txt_file.TxtFile.__init__" title="Ссылка на это определение"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mod</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'r'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'w'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'rb'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wb'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'a'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ab'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.txt'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.txt_file.TxtFile.__init__" title="Ссылка на это определение"></a></dt>
 <dd><p>Вы можете сразу выполнить метод указав <code class="docutils literal notranslate"><span class="pre">mod</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
@@ -136,7 +132,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="file.txt_file.TxtFile.check_extensions_file">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_extensions_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.txt_file.TxtFile.check_extensions_file" title="Ссылка на это определение"></a></dt>
-<dd><p>Проверить расширение файла</p>
+<dd><p>Сравнить расширение файла, с требуемым</p>
 <dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
 <dd class="field-odd"><ul class="simple">
@@ -160,9 +156,44 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="file.txt_file.TxtFile.decryptoFile">
+<span class="sig-name descname"><span class="pre">decryptoFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CryptoAes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">file.helpful.T_CryptoAes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#file.txt_file.TxtFile.decryptoFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Расшифровать файл</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – Ключ для шифрования, должен иметь длину 16,24,32 байта</p></li>
+<li><p><strong>CryptoAes</strong> – <a class="reference external" href="https://github.com/denisxab/mg_crp.git">https://github.com/denisxab/mg_crp.git</a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="file.txt_file.TxtFile.deleteFile">
 <span class="sig-name descname"><span class="pre">deleteFile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#file.txt_file.TxtFile.deleteFile" title="Ссылка на это определение"></a></dt>
 <dd><p>Удалить файл</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="file.txt_file.TxtFile.encryptFile">
+<span class="sig-name descname"><span class="pre">encryptFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CryptoAes:</span> <span class="pre">file.helpful.T_CryptoAes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outpath:</span> <span class="pre">typing.Optional[str]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.txt_file.TxtFile.encryptFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Зашифровать файл</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – Ключ для шифрования, должен иметь длину 16,24,32 байта</p></li>
+<li><p><strong>outpath</strong> – Путь куда сохранить зашифрованный файл</p></li>
+<li><p><strong>CryptoAes</strong> – <a class="reference external" href="https://github.com/denisxab/mg_crp.git">https://github.com/denisxab/mg_crp.git</a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="file.txt_file.TxtFile.hashFileSha256">
+<span class="sig-name descname"><span class="pre">hashFileSha256</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#file.txt_file.TxtFile.hashFileSha256" title="Ссылка на это определение"></a></dt>
+<dd><p>Получить хеш сумму файла</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -277,6 +308,12 @@ which means all lines will be returned.
 <dd><p>Записать данные в файл</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="file.txt_file.TxtFile.writeIfDontEqHash">
+<span class="sig-name descname"><span class="pre">writeIfDontEqHash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_sha256</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.txt_file.TxtFile.writeIfDontEqHash" title="Ссылка на это определение"></a></dt>
+<dd><p>Записать данные в файл если они различны по хеш сумме</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -284,7 +321,7 @@ which means all lines will be returned.
 <span id="csvfile"></span><h2>CsvFile<a class="headerlink" href="#module-file.csv_file" title="Ссылка на этот заголовок"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="file.csv_file.CsvFile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.csv_file.</span></span><span class="sig-name descname"><span class="pre">CsvFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.csv'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.csv_file.CsvFile" title="Ссылка на это определение"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.csv_file.</span></span><span class="sig-name descname"><span class="pre">CsvFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.csv'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.csv_file.CsvFile" title="Ссылка на это определение"></a></dt>
 <dd><p>Класс для работы csv файлами</p>
 <dl class="field-list simple">
 <dt class="field-odd">Пример</dt>
@@ -308,18 +345,13 @@ which means all lines will be returned.
 </pre></div>
 </div>
 <dl class="py method">
-<dt class="sig sig-object py" id="file.csv_file.CsvFile.HashFileSha256">
-<span class="sig-name descname"><span class="pre">HashFileSha256</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#file.csv_file.CsvFile.HashFileSha256" title="Ссылка на это определение"></a></dt>
-<dd><p>Получить хеш сумму файла</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="file.csv_file.CsvFile.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.csv'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.csv_file.CsvFile.__init__" title="Ссылка на это определение"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.csv'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.csv_file.CsvFile.__init__" title="Ссылка на это определение"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>type_file</strong> – Какое расширение должен иметь файл</p></li>
+<li><p><strong>type_file</strong> – Какое расширение должен иметь файл. Если указать
+None то это значит что проверка попуститься</p></li>
 <li><p><strong>name_file</strong> – Путь к файлу</p></li>
 </ul>
 </dd>
@@ -372,7 +404,7 @@ which means all lines will be returned.
 <dl class="py method">
 <dt class="sig sig-object py" id="file.csv_file.CsvFile.check_extensions_file">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_extensions_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.csv_file.CsvFile.check_extensions_file" title="Ссылка на это определение"></a></dt>
-<dd><p>Проверить расширение файла</p>
+<dd><p>Сравнить расширение файла, с требуемым</p>
 <dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
 <dd class="field-odd"><ul class="simple">
@@ -396,9 +428,44 @@ which means all lines will be returned.
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="file.csv_file.CsvFile.decryptoFile">
+<span class="sig-name descname"><span class="pre">decryptoFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CryptoAes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">file.helpful.T_CryptoAes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#file.csv_file.CsvFile.decryptoFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Расшифровать файл</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – Ключ для шифрования, должен иметь длину 16,24,32 байта</p></li>
+<li><p><strong>CryptoAes</strong> – <a class="reference external" href="https://github.com/denisxab/mg_crp.git">https://github.com/denisxab/mg_crp.git</a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="file.csv_file.CsvFile.deleteFile">
 <span class="sig-name descname"><span class="pre">deleteFile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#file.csv_file.CsvFile.deleteFile" title="Ссылка на это определение"></a></dt>
 <dd><p>Удалить файл</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="file.csv_file.CsvFile.encryptFile">
+<span class="sig-name descname"><span class="pre">encryptFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CryptoAes:</span> <span class="pre">file.helpful.T_CryptoAes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outpath:</span> <span class="pre">typing.Optional[str]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.csv_file.CsvFile.encryptFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Зашифровать файл</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – Ключ для шифрования, должен иметь длину 16,24,32 байта</p></li>
+<li><p><strong>outpath</strong> – Путь куда сохранить зашифрованный файл</p></li>
+<li><p><strong>CryptoAes</strong> – <a class="reference external" href="https://github.com/denisxab/mg_crp.git">https://github.com/denisxab/mg_crp.git</a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="file.csv_file.CsvFile.hashFileSha256">
+<span class="sig-name descname"><span class="pre">hashFileSha256</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#file.csv_file.CsvFile.hashFileSha256" title="Ссылка на это определение"></a></dt>
+<dd><p>Получить хеш сумму файла</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -566,6 +633,12 @@ which means all lines will be returned.
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="file.csv_file.CsvFile.writeIfDontEqHash">
+<span class="sig-name descname"><span class="pre">writeIfDontEqHash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_sha256</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.csv_file.CsvFile.writeIfDontEqHash" title="Ссылка на это определение"></a></dt>
+<dd><p>Записать данные в файл если они различны по хеш сумме</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -573,22 +646,17 @@ which means all lines will be returned.
 <span id="picklefile"></span><h2>PickleFile<a class="headerlink" href="#module-file.pickle_file" title="Ссылка на этот заголовок"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="file.pickle_file.PickleFile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.pickle_file.</span></span><span class="sig-name descname"><span class="pre">PickleFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.pkl'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.pickle_file.PickleFile" title="Ссылка на это определение"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.pickle_file.</span></span><span class="sig-name descname"><span class="pre">PickleFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.pkl'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.pickle_file.PickleFile" title="Ссылка на это определение"></a></dt>
 <dd><p>Работа с сериализоваными данными</p>
 <p><a class="reference external" href="https://docs.python.org/3/library/pickle.html">Документация pickle</a></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="file.pickle_file.PickleFile.HashFileSha256">
-<span class="sig-name descname"><span class="pre">HashFileSha256</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#file.pickle_file.PickleFile.HashFileSha256" title="Ссылка на это определение"></a></dt>
-<dd><p>Получить хеш сумму файла</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="file.pickle_file.PickleFile.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.pkl'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.pickle_file.PickleFile.__init__" title="Ссылка на это определение"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.pkl'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.pickle_file.PickleFile.__init__" title="Ссылка на это определение"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>type_file</strong> – Какое расширение должен иметь файл</p></li>
+<li><p><strong>type_file</strong> – Какое расширение должен иметь файл. Если указать
+None то это значит что проверка попуститься</p></li>
 <li><p><strong>name_file</strong> – Путь к файлу</p></li>
 </ul>
 </dd>
@@ -610,7 +678,7 @@ which means all lines will be returned.
 <dl class="py method">
 <dt class="sig sig-object py" id="file.pickle_file.PickleFile.check_extensions_file">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_extensions_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.pickle_file.PickleFile.check_extensions_file" title="Ссылка на это определение"></a></dt>
-<dd><p>Проверить расширение файла</p>
+<dd><p>Сравнить расширение файла, с требуемым</p>
 <dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
 <dd class="field-odd"><ul class="simple">
@@ -634,9 +702,44 @@ which means all lines will be returned.
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="file.pickle_file.PickleFile.decryptoFile">
+<span class="sig-name descname"><span class="pre">decryptoFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CryptoAes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">file.helpful.T_CryptoAes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#file.pickle_file.PickleFile.decryptoFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Расшифровать файл</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – Ключ для шифрования, должен иметь длину 16,24,32 байта</p></li>
+<li><p><strong>CryptoAes</strong> – <a class="reference external" href="https://github.com/denisxab/mg_crp.git">https://github.com/denisxab/mg_crp.git</a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="file.pickle_file.PickleFile.deleteFile">
 <span class="sig-name descname"><span class="pre">deleteFile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#file.pickle_file.PickleFile.deleteFile" title="Ссылка на это определение"></a></dt>
 <dd><p>Удалить файл</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="file.pickle_file.PickleFile.encryptFile">
+<span class="sig-name descname"><span class="pre">encryptFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CryptoAes:</span> <span class="pre">file.helpful.T_CryptoAes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outpath:</span> <span class="pre">typing.Optional[str]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.pickle_file.PickleFile.encryptFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Зашифровать файл</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – Ключ для шифрования, должен иметь длину 16,24,32 байта</p></li>
+<li><p><strong>outpath</strong> – Путь куда сохранить зашифрованный файл</p></li>
+<li><p><strong>CryptoAes</strong> – <a class="reference external" href="https://github.com/denisxab/mg_crp.git">https://github.com/denisxab/mg_crp.git</a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="file.pickle_file.PickleFile.hashFileSha256">
+<span class="sig-name descname"><span class="pre">hashFileSha256</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#file.pickle_file.PickleFile.hashFileSha256" title="Ссылка на это определение"></a></dt>
+<dd><p>Получить хеш сумму файла</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -675,6 +778,12 @@ which means all lines will be returned.
 <dd><p>Сериализовать и записать данные в файл</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="file.pickle_file.PickleFile.writeIfDontEqHash">
+<span class="sig-name descname"><span class="pre">writeIfDontEqHash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_sha256</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.pickle_file.PickleFile.writeIfDontEqHash" title="Ссылка на это определение"></a></dt>
+<dd><p>Записать данные в файл если они различны по хеш сумме</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -682,21 +791,16 @@ which means all lines will be returned.
 <span id="jsonfile"></span><h2>JsonFile<a class="headerlink" href="#module-file.json_file" title="Ссылка на этот заголовок"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="file.json_file.JsonFile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.json_file.</span></span><span class="sig-name descname"><span class="pre">JsonFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.json'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.json_file.JsonFile" title="Ссылка на это определение"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.json_file.</span></span><span class="sig-name descname"><span class="pre">JsonFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.json'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.json_file.JsonFile" title="Ссылка на это определение"></a></dt>
 <dd><p>Работа с Json файлами</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="file.json_file.JsonFile.HashFileSha256">
-<span class="sig-name descname"><span class="pre">HashFileSha256</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#file.json_file.JsonFile.HashFileSha256" title="Ссылка на это определение"></a></dt>
-<dd><p>Получить хеш сумму файла</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="file.json_file.JsonFile.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.json'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.json_file.JsonFile.__init__" title="Ссылка на это определение"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.json'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.json_file.JsonFile.__init__" title="Ссылка на это определение"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>type_file</strong> – Какое расширение должен иметь файл</p></li>
+<li><p><strong>type_file</strong> – Какое расширение должен иметь файл. Если указать
+None то это значит что проверка попуститься</p></li>
 <li><p><strong>name_file</strong> – Путь к файлу</p></li>
 </ul>
 </dd>
@@ -718,7 +822,7 @@ which means all lines will be returned.
 <dl class="py method">
 <dt class="sig sig-object py" id="file.json_file.JsonFile.check_extensions_file">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_extensions_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.json_file.JsonFile.check_extensions_file" title="Ссылка на это определение"></a></dt>
-<dd><p>Проверить расширение файла</p>
+<dd><p>Сравнить расширение файла, с требуемым</p>
 <dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
 <dd class="field-odd"><ul class="simple">
@@ -742,9 +846,44 @@ which means all lines will be returned.
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="file.json_file.JsonFile.decryptoFile">
+<span class="sig-name descname"><span class="pre">decryptoFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CryptoAes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">file.helpful.T_CryptoAes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#file.json_file.JsonFile.decryptoFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Расшифровать файл</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – Ключ для шифрования, должен иметь длину 16,24,32 байта</p></li>
+<li><p><strong>CryptoAes</strong> – <a class="reference external" href="https://github.com/denisxab/mg_crp.git">https://github.com/denisxab/mg_crp.git</a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="file.json_file.JsonFile.deleteFile">
 <span class="sig-name descname"><span class="pre">deleteFile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#file.json_file.JsonFile.deleteFile" title="Ссылка на это определение"></a></dt>
 <dd><p>Удалить файл</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="file.json_file.JsonFile.encryptFile">
+<span class="sig-name descname"><span class="pre">encryptFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CryptoAes:</span> <span class="pre">file.helpful.T_CryptoAes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outpath:</span> <span class="pre">typing.Optional[str]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.json_file.JsonFile.encryptFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Зашифровать файл</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – Ключ для шифрования, должен иметь длину 16,24,32 байта</p></li>
+<li><p><strong>outpath</strong> – Путь куда сохранить зашифрованный файл</p></li>
+<li><p><strong>CryptoAes</strong> – <a class="reference external" href="https://github.com/denisxab/mg_crp.git">https://github.com/denisxab/mg_crp.git</a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="file.json_file.JsonFile.hashFileSha256">
+<span class="sig-name descname"><span class="pre">hashFileSha256</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#file.json_file.JsonFile.hashFileSha256" title="Ссылка на это определение"></a></dt>
+<dd><p>Получить хеш сумму файла</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -793,6 +932,12 @@ which means all lines will be returned.
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="file.json_file.JsonFile.writeIfDontEqHash">
+<span class="sig-name descname"><span class="pre">writeIfDontEqHash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_sha256</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.json_file.JsonFile.writeIfDontEqHash" title="Ссылка на это определение"></a></dt>
+<dd><p>Записать данные в файл если они различны по хеш сумме</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -800,21 +945,16 @@ which means all lines will be returned.
 <span id="yamlfile"></span><h2>YamlFile<a class="headerlink" href="#module-file.yaml_file" title="Ссылка на этот заголовок"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="file.yaml_file.YamlFile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.yaml_file.</span></span><span class="sig-name descname"><span class="pre">YamlFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.yaml'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.yaml_file.YamlFile" title="Ссылка на это определение"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.yaml_file.</span></span><span class="sig-name descname"><span class="pre">YamlFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.yaml'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.yaml_file.YamlFile" title="Ссылка на это определение"></a></dt>
 <dd><p>Класс для работы с <code class="docutils literal notranslate"><span class="pre">Yaml</span></code> файлами</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="file.yaml_file.YamlFile.HashFileSha256">
-<span class="sig-name descname"><span class="pre">HashFileSha256</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#file.yaml_file.YamlFile.HashFileSha256" title="Ссылка на это определение"></a></dt>
-<dd><p>Получить хеш сумму файла</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="file.yaml_file.YamlFile.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.yaml'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.yaml_file.YamlFile.__init__" title="Ссылка на это определение"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.yaml'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.yaml_file.YamlFile.__init__" title="Ссылка на это определение"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>type_file</strong> – Какое расширение должен иметь файл</p></li>
+<li><p><strong>type_file</strong> – Какое расширение должен иметь файл. Если указать
+None то это значит что проверка попуститься</p></li>
 <li><p><strong>name_file</strong> – Путь к файлу</p></li>
 </ul>
 </dd>
@@ -836,7 +976,7 @@ which means all lines will be returned.
 <dl class="py method">
 <dt class="sig sig-object py" id="file.yaml_file.YamlFile.check_extensions_file">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_extensions_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.yaml_file.YamlFile.check_extensions_file" title="Ссылка на это определение"></a></dt>
-<dd><p>Проверить расширение файла</p>
+<dd><p>Сравнить расширение файла, с требуемым</p>
 <dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
 <dd class="field-odd"><ul class="simple">
@@ -860,9 +1000,44 @@ which means all lines will be returned.
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="file.yaml_file.YamlFile.decryptoFile">
+<span class="sig-name descname"><span class="pre">decryptoFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CryptoAes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">file.helpful.T_CryptoAes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#file.yaml_file.YamlFile.decryptoFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Расшифровать файл</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – Ключ для шифрования, должен иметь длину 16,24,32 байта</p></li>
+<li><p><strong>CryptoAes</strong> – <a class="reference external" href="https://github.com/denisxab/mg_crp.git">https://github.com/denisxab/mg_crp.git</a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="file.yaml_file.YamlFile.deleteFile">
 <span class="sig-name descname"><span class="pre">deleteFile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#file.yaml_file.YamlFile.deleteFile" title="Ссылка на это определение"></a></dt>
 <dd><p>Удалить файл</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="file.yaml_file.YamlFile.encryptFile">
+<span class="sig-name descname"><span class="pre">encryptFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CryptoAes:</span> <span class="pre">file.helpful.T_CryptoAes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outpath:</span> <span class="pre">typing.Optional[str]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.yaml_file.YamlFile.encryptFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Зашифровать файл</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – Ключ для шифрования, должен иметь длину 16,24,32 байта</p></li>
+<li><p><strong>outpath</strong> – Путь куда сохранить зашифрованный файл</p></li>
+<li><p><strong>CryptoAes</strong> – <a class="reference external" href="https://github.com/denisxab/mg_crp.git">https://github.com/denisxab/mg_crp.git</a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="file.yaml_file.YamlFile.hashFileSha256">
+<span class="sig-name descname"><span class="pre">hashFileSha256</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#file.yaml_file.YamlFile.hashFileSha256" title="Ссылка на это определение"></a></dt>
+<dd><p>Получить хеш сумму файла</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -920,6 +1095,12 @@ which means all lines will be returned.
 <p>:param allow_unicode:Экранировать символы, если True данные запишутся как есть.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="file.yaml_file.YamlFile.writeIfDontEqHash">
+<span class="sig-name descname"><span class="pre">writeIfDontEqHash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hash_sha256</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.yaml_file.YamlFile.writeIfDontEqHash" title="Ссылка на это определение"></a></dt>
+<dd><p>Записать данные в файл если они различны по хеш сумме</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -927,7 +1108,7 @@ which means all lines will be returned.
 <span id="envfile"></span><h2>EnvFile<a class="headerlink" href="#module-file.env_file" title="Ссылка на этот заголовок"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="file.env_file.EnvFile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.env_file.</span></span><span class="sig-name descname"><span class="pre">EnvFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.env'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.env_file.EnvFile" title="Ссылка на это определение"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.env_file.</span></span><span class="sig-name descname"><span class="pre">EnvFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.env'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.env_file.EnvFile" title="Ссылка на это определение"></a></dt>
 <dd><p>Работа с файлом переменных окружения</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="file.env_file.EnvFile.IS_READ_ENV_FILE">
@@ -937,7 +1118,7 @@ which means all lines will be returned.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="file.env_file.EnvFile.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.env'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.env_file.EnvFile.__init__" title="Ссылка на это определение"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.env'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.env_file.EnvFile.__init__" title="Ссылка на это определение"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1121,6 +1302,136 @@ which means all lines will be returned.
 <dt class="sig sig-object py" id="file.base_folder.TgetAllFileAndFolder.split_path">
 <span class="sig-name descname"><span class="pre">split_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#file.base_folder.TgetAllFileAndFolder.split_path" title="Ссылка на это определение"></a></dt>
 <dd><p>Начало которое нужно отделить от путей</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="zippfile">
+<h2>ZippFile<a class="headerlink" href="#zippfile" title="Ссылка на этот заголовок"></a></h2>
+<span class="target" id="module-file.zip_file"></span><dl class="py class">
+<dt class="sig sig-object py" id="file.zip_file.ZipCompression">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.zip_file.</span></span><span class="sig-name descname"><span class="pre">ZipCompression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.zip_file.ZipCompression" title="Ссылка на это определение"></a></dt>
+<dd><p>Степень сжатия, чем ниже тем больше</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="file.zip_file.ZipCompression.ZIP_BZIP2">
+<span class="sig-name descname"><span class="pre">ZIP_BZIP2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12</span></em><a class="headerlink" href="#file.zip_file.ZipCompression.ZIP_BZIP2" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="file.zip_file.ZipCompression.ZIP_DEFLATED">
+<span class="sig-name descname"><span class="pre">ZIP_DEFLATED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#file.zip_file.ZipCompression.ZIP_DEFLATED" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="file.zip_file.ZipCompression.ZIP_LZMA">
+<span class="sig-name descname"><span class="pre">ZIP_LZMA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">14</span></em><a class="headerlink" href="#file.zip_file.ZipCompression.ZIP_LZMA" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="file.zip_file.ZipCompression.ZIP_STORED">
+<span class="sig-name descname"><span class="pre">ZIP_STORED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#file.zip_file.ZipCompression.ZIP_STORED" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="file.zip_file.ZippFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.zip_file.</span></span><span class="sig-name descname"><span class="pre">ZippFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file:</span> <span class="pre">typing.Optional[str]</span> <span class="pre">=</span> <span class="pre">'.zip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_log_info:</span> <span class="pre">logsmal.logsmal.loglevel</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">ZippFile.&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_log_error:</span> <span class="pre">logsmal.logsmal.loglevel</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">ZippFile.&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.zip_file.ZippFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Работа с архивом</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="file.zip_file.ZippFile.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file:</span> <span class="pre">typing.Optional[str]</span> <span class="pre">=</span> <span class="pre">'.zip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_log_info:</span> <span class="pre">logsmal.logsmal.loglevel</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">ZippFile.&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_log_error:</span> <span class="pre">logsmal.logsmal.loglevel</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">ZippFile.&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.zip_file.ZippFile.__init__" title="Ссылка на это определение"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type_file</strong> – Какое расширение должен иметь файл. Если указать
+None то это значит что проверка попуститься</p></li>
+<li><p><strong>name_file</strong> – Путь к файлу</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="file.zip_file.ZippFile.appendFile">
+<span class="sig-name descname"><span class="pre">appendFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.zip_file.ZippFile.appendFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Добавить данные в файл</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="file.zip_file.ZippFile.name_file">
+<span class="sig-name descname"><span class="pre">name_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#file.zip_file.ZippFile.name_file" title="Ссылка на это определение"></a></dt>
+<dd><p>Путь к файлу</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="file.zip_file.ZippFile.readFile">
+<span class="sig-name descname"><span class="pre">readFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#file.zip_file.ZippFile.readFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Прочитать файл</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="file.zip_file.ZippFile.writeFile">
+<span class="sig-name descname"><span class="pre">writeFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compression</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#file.zip_file.ZipCompression" title="file.zip_file.ZipCompression"><span class="pre">file.zip_file.ZipCompression</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ZipCompression.ZIP_DEFLATED</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arcname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.zip_file.ZippFile.writeFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Записать файл в архив</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_path</strong> – Путь к файлу</p></li>
+<li><p><strong>compression</strong> – Степень сжатия файла</p></li>
+<li><p><strong>arcname</strong> – По какому пути будет расположен файл в архиве</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="file.zip_file.ZippFile.writePath">
+<span class="sig-name descname"><span class="pre">writePath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">execute_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compression</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#file.zip_file.ZipCompression" title="file.zip_file.ZipCompression"><span class="pre">file.zip_file.ZipCompression</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ZipCompression.ZIP_DEFLATED</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.zip_file.ZippFile.writePath" title="Ссылка на это определение"></a></dt>
+<dd><p>Заархивировать файлы и папки из указанного пути</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_path</strong> – Путь к папке в которой нужно все за архивировать.
+Кроме того что указано в аргументе <code class="docutils literal notranslate"><span class="pre">execute_path</span></code></p></li>
+<li><p><strong>execute_path</strong> – Что не архивировать</p></li>
+<li><p><strong>compression</strong> – Сжатие файла</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-file.log_file">
+<span id="logfile"></span><h2>LogFile<a class="headerlink" href="#module-file.log_file" title="Ссылка на этот заголовок"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="file.log_file.LogFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">file.log_file.</span></span><span class="sig-name descname"><span class="pre">LogFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mod</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'r'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'w'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'rb'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wb'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'a'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ab'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.log'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.log_file.LogFile" title="Ссылка на это определение"></a></dt>
+<dd><p>Класс дял работы с лог файлами</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="file.log_file.LogFile.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mod</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'r'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'w'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'rb'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wb'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'a'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ab'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.log'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#file.log_file.LogFile.__init__" title="Ссылка на это определение"></a></dt>
+<dd><p>Вы можете сразу выполнить метод указав <code class="docutils literal notranslate"><span class="pre">mod</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_file</strong> – </p></li>
+<li><p><strong>mod</strong> – </p></li>
+<li><p><strong>encoding</strong> – </p></li>
+<li><p><strong>data</strong> – </p></li>
+<li><p><strong>type_file</strong> – Какое расширение должен иметь файл</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="file.log_file.LogFile.name_file">
+<span class="sig-name descname"><span class="pre">name_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#file.log_file.LogFile.name_file" title="Ссылка на это определение"></a></dt>
+<dd><p>Путь к файлу</p>
 </dd></dl>
 
 </dd></dl>
