@@ -24,17 +24,17 @@ class type_os_res(typing.NamedTuple):
 
 def os_exe_async(command_list: list[str]) -> list[type_os_res]:
     """
-    Выполнить асинхронно команды OS
+    Выполнить асинхронно команды OS, каждая команда в отдельной потоке
 
     :param command_list: Список команд
     :return:
 
 
     :Пример:
-
-    .. code-bloc:: python
-
-        pprint(os_exe_async(['ls', 'ls /home/']))
+    
+    ```py
+    pprint(os_exe_async(['ls', 'ls /home/']))
+    ```
     """
 
     async def __self(_command: str):
@@ -44,12 +44,11 @@ def os_exe_async(command_list: list[str]) -> list[type_os_res]:
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
-
-        stdout, stderr = await proc.communicate()
         # Обновляем текст в плейсхолжере
         pbar.set_description(f"{_command}")
         pbar.update()
-
+        # Получить результат выполнения команды
+        stdout, stderr = await proc.communicate()
         return type_os_res(
             stdout=stdout.decode(),
             stderr=stderr.decode(),

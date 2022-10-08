@@ -1,6 +1,7 @@
-/venv
-/.idea
-/dist
+venv
+.idea
+dist
+.vscode
 __pycache__
 mg_file/__pycache__/
 mg_file/file/__pycache__/
