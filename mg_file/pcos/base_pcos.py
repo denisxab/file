@@ -16,7 +16,7 @@ class type_os_res(typing.NamedTuple):
 
     def __str__(self, logger_info: logger, logger_error: logger, flag:str):
         # Если есть ошибка выполнения
-        if self.stderr:
+        if self.stderr and self.cod != 0:            
             logger_error(f"CMD:{self.cmd}\nTEXT:{self.stderr}\nCODE:{self.cod}", flag)
         else:
             logger_info(f"CMD:{self.cmd}\nTEXT:{self.stdout}", flag)
