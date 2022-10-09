@@ -44,11 +44,11 @@ def os_exe_async(command_list: list[str]) -> list[type_os_res]:
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
+        # Получить результат выполнения команды
+        stdout, stderr = await proc.communicate()
         # Обновляем текст в плейсхолжере
         pbar.set_description(f"{_command}")
         pbar.update()
-        # Получить результат выполнения команды
-        stdout, stderr = await proc.communicate()
         return type_os_res(
             stdout=stdout.decode(),
             stderr=stderr.decode(),
